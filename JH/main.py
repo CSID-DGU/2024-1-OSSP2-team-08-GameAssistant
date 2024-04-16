@@ -1,9 +1,9 @@
 import sys
+import json
 import os
-import pandas as pd
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore
 
 class UI_MainWindow(QWidget):
     def __init__(self):
@@ -11,8 +11,11 @@ class UI_MainWindow(QWidget):
         self.setupUi()
 
     def setupUi(self):
+        window_height = 720
+        window_width = 1280
+
         self.setWindowTitle("Tier")
-        self.setGeometry(100, 100, 1024, 768)
+        self.setGeometry(0, 0, window_width, window_height)
         self.setStyleSheet("background-color: #19191A;")
 
         icon_x = 10
@@ -21,9 +24,8 @@ class UI_MainWindow(QWidget):
         icon_button_height = 60
         icon_label_width = 60
         icon_label_height = 20
-
         tier_x = 10
-        tier_y = 40
+        tier_y = 45
 
         icons_folder = '.\\c_icons\\champ_icons'
         icon_files = os.listdir(icons_folder)
@@ -38,12 +40,30 @@ class UI_MainWindow(QWidget):
         for tier_icon_file in tier_icon_files:
             tier_icon_path.append(os.path.join(tier_icon_folder, tier_icon_file))
 
-        tier_folder = '.\\c_prop'
-        tier_files = os.listdir(tier_folder)
-        tier_path = []
-        for tier_file in tier_files:
-            tier_path.append(os.path.join(tier_folder, tier_file))
-        tier_f = pd.read_excel(str(tier_path)[2:-2], header=None, index_col=None)
+        file = open('champion/champion.json', 'r', encoding='utf-8')
+        c_file = json.load(file)
+        self.c_lists = [[] for i in range(c_file["data"].__len__())]
+        i = 0
+        tier = 0
+        for data in c_file["data"]:
+            self.c_lists[i].append(c_file["data"][data]["name"])
+            self.c_lists[i].append(c_file["data"][data]["Winrate"])
+            self.c_lists[i].append(c_file["data"][data]["Pickrate"])
+            self.c_lists[i].append(c_file["data"][data]["Banrate"])
+            if self.c_lists[i][1] >= 55.0:
+                tier = 0
+            elif 55.0 > self.c_lists[i][1] >= 52.0:
+                tier = 1
+            elif 52.0 > self.c_lists[i][1] >= 50.0:
+                tier = 2
+            elif 50.0 > self.c_lists[i][1] >= 48.0:
+                tier = 3
+            elif 48.0 > self.c_lists[i][1] >= 45.0:
+                tier = 4
+            elif 45.0 > self.c_lists[i][1]:
+                tier = 5
+            self.c_lists[i].append(tier)
+            i += 1
 
         scroll_area_1 = QScrollArea(self)
         scroll_area_1.setGeometry(120, 100, 300, 600)
@@ -84,7 +104,6 @@ class UI_MainWindow(QWidget):
                                     "border-width: 0px;"
                                     "border-radius: 3px;")
         self.lineEdit.textChanged.connect(self.filterButtons)
-        self.lineEdit.setMaximumHeight(40)
 
         self.icon_buttons = []
         self.icon_labels = []
@@ -107,83 +126,99 @@ class UI_MainWindow(QWidget):
             self.icon_labels.append(label)
             if j % 4 == 3:
                 icon_x = 10
-                icon_y += 100
+                icon_y += 90
             else:
                 icon_x += 70
 
-        self.label = QLabel(scroll_content_2)
-        self.label.setObjectName("Tier_Title")
-        self.label.setText("\t티어   이름       승률")
-        self.label.setStyleSheet("color: #9E9EAF;"
-                                 "border-width: 0px;"
-                                 "border-radius: 3px;")
-        self.label.setGeometry(0, 0, 480, 40)
-
         self.tier_buttons = []
         self.tier_labels = []
-        self.tier_tiers = [[] for i in range(6)]
-        for j in range(tier_f[0].__len__()):
-            # 티어 지수 계산(지금은 그냥 승률임)
-            tier = tier_f[1][j] / 100.0
-            if tier >= 0.55:
-                tier = 0
-            elif 0.52 <= tier < 0.55:
-                tier = 1
-            elif 0.50 <= tier < 0.52:
-                tier = 2
-            elif 0.48 <= tier < 0.50:
-                tier = 3
-            elif 0.45 <= tier < 0.48:
-                tier = 4
-            elif tier < 0.45:
-                tier = 5
-            self.tier_tiers[tier].append(j)
+        for i in range(self.c_lists.__len__()):
+            button_2a = QPushButton(scroll_content_2)
+            for j in range(icon_path.__len__()):
+                if str(self.c_lists[i][0]) in icon_path[j]:
+                    button_2a.setIcon(QIcon(icon_path[j]))
+            button_2a.setIconSize(QtCore.QSize(45, 45))
+            button_2a.setGeometry(tier_x, tier_y, 50, 50)
+            button_2a.setObjectName(f"Tier_icon_{str(self.c_lists[i][0])}")
+            button_2a.setText("")
 
-        for i in range(6):
-            for j in range(self.tier_tiers[i].__len__() - 1):
-                for k in range(self.tier_tiers[i].__len__() - 1):
-                    if tier_f[1][j] > tier_f[1][j + 1]:
-                        self.tier_tiers[i][j], self.tier_tiers[i][j + 1] = self.tier_tiers[i][j + 1], self.tier_tiers[i][j]
+            button_2b = QPushButton(scroll_content_2)
+            button_2b.setIcon(QIcon(tier_icon_path[self.c_lists[i][4]]))
+            button_2b.setIconSize(QtCore.QSize(45, 45))
+            button_2b.setGeometry(tier_x + 50, tier_y, 50, 50)
+            button_2b.setObjectName(f"Tier_tier_{str(self.c_lists[i][0])}")
+            button_2b.setText("")
 
-        for i in range(6):
-            for j in self.tier_tiers[i]:
-                button_2a = QPushButton(scroll_content_2)
-                for k in range(icon_path.__len__()):
-                    if (str(tier_f[0][j]) in icon_path[k]):
-                        button_2a.setIcon(QIcon(icon_path[k]))
-                button_2a.setIconSize(QtCore.QSize(45, 45))
-                button_2a.setGeometry(tier_x, tier_y, 50, 50)
-                button_2a.setObjectName(f"Tier_icon_{str(tier_f[0][j])}")
-                button_2a.setText("")
-                self.tier_buttons.append(button_2a)
+            label_2a = QLabel(scroll_content_2)
+            label_2a.setGeometry(tier_x + 100, tier_y, 60, 50)
+            label_2a.setText(str(self.c_lists[i][0]))
+            if (len(str(self.c_lists[i][0])) > 3):
+                label_2a.setText(str(self.c_lists[i][0][:3]) + "...")
+            label_2a.setStyleSheet("color: #9E9EAF;")
 
-                button_2b = QPushButton(scroll_content_2)
-                button_2b.setIcon(QIcon(tier_icon_path[i]))
-                button_2b.setIconSize(QtCore.QSize(45, 45))
-                button_2b.setGeometry(tier_x + 50, tier_y, 50, 50)
-                button_2b.setObjectName(f"Tier_tier_{str(tier_f[0][j])}")
-                button_2b.setText("")
-                self.tier_buttons.append(button_2b)
+            label_2b = QLabel(scroll_content_2)
+            label_2b.setGeometry(tier_x + 180, tier_y, 50, 50)
+            label_2b.setText(str(self.c_lists[i][1]) + "%")
+            label_2b.setStyleSheet("color: #9E9EAF;")
 
-                # 버튼 라벨 추가
-                label_2a = QLabel(scroll_content_2)
-                label_2a.setText(str(tier_f[0][j]))
-                label_2a.setObjectName(f"Tier_{str(tier_f[0][j])}")
-                if (len(str(tier_f[0][j])) > 3):
-                    label_2a.setText(str(tier_f[0][j][:3]) + "...")
-                label_2a.setGeometry(tier_x + 100, tier_y, 70, 50)
-                label_2a.setStyleSheet("color: #9E9EAF;")
-                self.tier_labels.append(label_2a)
+            label_2c = QLabel(scroll_content_2)
+            label_2c.setGeometry(tier_x + 250, tier_y, 50, 50)
+            label_2c.setText(str(self.c_lists[i][2]) + "%")
+            label_2c.setStyleSheet("color: #9E9EAF;")
 
-                label_2b = QLabel(scroll_content_2)
-                label_2b.setText(str(tier_f[1][j]) + "%")
-                label_2b.setObjectName(f"Tier_wr_{str(tier_f[0][j])}")
-                label_2b.setGeometry(tier_x + 170, tier_y, 50, 50)
-                label_2b.setStyleSheet("color: #9E9EAF;")
-                self.tier_labels.append(label_2b)
-                tier_x = 10
-                tier_y += 55
+            label_2d = QLabel(scroll_content_2)
+            label_2d.setGeometry(tier_x + 320, tier_y, 50, 50)
+            label_2d.setText(str(self.c_lists[i][3]) + "%")
+            label_2d.setStyleSheet("color: #9E9EAF;")
 
+            self.tier_buttons.append([button_2a, button_2b])
+            self.tier_labels.append([label_2a, label_2b, label_2c, label_2d])
+            tier_y += 55
+
+        self.button1 = QPushButton(scroll_content_2)
+        self.button1.setObjectName("TierSort")
+        self.button1.setText("티어")
+        self.button1.setStyleSheet("color: #9E9EAF;"
+                                   "border-width: 0px;"
+                                   "border-radius: 3px;")
+        self.button1.setGeometry(60, 0, 50, 50)
+        self.button1.clicked.connect(lambda:self.sortTiers(4))
+
+        self.button2 = QPushButton(scroll_content_2)
+        self.button2.setObjectName("NameSort")
+        self.button2.setText("이름")
+        self.button2.setStyleSheet("color: #9E9EAF;"
+                                   "border-width: 0px;"
+                                   "border-radius: 3px;")
+        self.button2.setGeometry(115, 0, 50, 50)
+        self.button2.clicked.connect(lambda:self.sortTiers(0))
+
+        self.button3 = QPushButton(scroll_content_2)
+        self.button3.setObjectName("WRSort")
+        self.button3.setText("승률")
+        self.button3.setStyleSheet("color: #9E9EAF;"
+                                   "border-width: 0px;"
+                                   "border-radius: 3px;")
+        self.button3.setGeometry(185, 0, 50, 50)
+        self.button3.clicked.connect(lambda:self.sortTiers(1))
+
+        self.button4 = QPushButton(scroll_content_2)
+        self.button4.setObjectName("PRSort")
+        self.button4.setText("픽율")
+        self.button4.setStyleSheet("color: #9E9EAF;"
+                                   "border-width: 0px;"
+                                   "border-radius: 3px;")
+        self.button4.setGeometry(255, 0, 50, 50)
+        self.button4.clicked.connect(lambda:self.sortTiers(2))
+
+        self.button5 = QPushButton(scroll_content_2)
+        self.button5.setObjectName("BRSort")
+        self.button5.setText("밴율")
+        self.button5.setStyleSheet("color: #9E9EAF;"
+                                   "border-width: 0px;"
+                                   "border-radius: 3px;")
+        self.button5.setGeometry(325, 0, 50, 50)
+        self.button5.clicked.connect(lambda:self.sortTiers(3))
 
     def filterButtons(self, text):
         text = text.replace(" ", "")
@@ -209,6 +244,23 @@ class UI_MainWindow(QWidget):
                 else:
                     x += 70
                 i += 1
+
+    def sortTiers(self, num):
+        x = 10
+        y = 45
+        self.c_lists.sort(key = lambda x: x[num])
+        if num != 4 and num != 0:
+            self.c_lists.reverse()
+        for i in range(self.c_lists.__len__()):
+            for button, label in zip(self.tier_buttons, self.tier_labels):
+                if self.c_lists[i][0] in button[0].objectName():
+                    button[0].setGeometry(x, y, 50, 50)
+                    button[1].setGeometry(x + 50, y, 50, 50)
+                    label[0].setGeometry(x + 100, y, 50, 50)
+                    label[1].setGeometry(x + 180, y, 50, 50)
+                    label[2].setGeometry(x + 250, y, 50, 50)
+                    label[3].setGeometry(x + 320, y, 50, 50)
+            y += 55
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
