@@ -12,6 +12,7 @@ import pyautogui as pygui
 
 point_list = []
 
+#save mouse positin on click
 def on_click(x, y, button, pressed):
     print('on_click')
     if pressed:
@@ -21,7 +22,6 @@ def on_click(x, y, button, pressed):
         global end_pos
         end_pos = [x, y]
         point_list.append((start_pos+end_pos))
-        print(point_list)
         return False
 
 def on_activate_drag():
@@ -35,7 +35,7 @@ def on_save_images():
     print('on_save')
     i=0
     for [x1, y1, x2, y2] in point_list:
-        width=abs(x1 - x2)D
+        width=abs(x1 - x2)
         height=abs(y1 - y2)
         if width==0 | height==0:
             print("Wrong range")
