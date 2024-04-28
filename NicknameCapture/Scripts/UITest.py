@@ -33,17 +33,18 @@ class ImgSelectUI(QWidget, ImgSelectWindowSource):
             self.other_window  = CaptureHelperUI(self.fpath) #통합 시 수정 필요
             self.other_window.showFullScreen()
             self.hide()
-        else: # for Debug
-            self.other_window  = CaptureHelperUI(self.fpath) 
-            self.other_window.showFullScreen()
-            self.hide()
+        #else: # for Debug
+         #   self.other_window  = CaptureHelperUI(self.fpath) 
+          #  self.other_window.showFullScreen()
+           # self.hide()
         return
 
 class CaptureHelperUI(QWidget, CaptureHelperSource):
     def __init__(self, fpath):
         super().__init__()
         self.setupUi(self)
-        self.NicknameCaptureFrame.setStyleSheet("QFrame { border-image: url('"+ fpath +"');}")
+        self.pixmap = QPixmap(fpath)
+        #self.setStyleSheet("QFrame { border-image: url('"+ fpath +"');}")
 
         self.createButton.clicked.connect(self.Btn_Create)
         self.editButton.clicked.connect(self.Btn_Edit)
@@ -56,6 +57,7 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
         self.end_point = None
 
         self.__file_path = "./Regions.json"
+        self.__json_file_path = "NicknameCapture/JSON/SaveDate.json"
         self.__region_list= []
         #self.__load_json()
 
@@ -85,7 +87,7 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
         self.state = 0
 
     def Btn_Save(self):
-        self.state = 4
+        self.save_json()
         return
 
     def Btn_Exit(self):
@@ -109,6 +111,16 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
             for region in self.__region_list:
                 print(region.get_name(), region.get_region())
 
+    def save_json(self):
+        print('on_save') #test, delete after
+        json_data = []
+        for reg in self.__region_list:
+            dic = reg.get_dict()
+            json_data.append(dic)
+
+        with open(self.__json_file_path, 'w') as outfile:
+            json.dump(json_data, outfile, indent=2)
+
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton and self.state == 1:
             self.start_point = event.pos()
@@ -129,13 +141,16 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setPen(QColor(Qt.red))
+        painter.drawPixmap(self.rect(), self.pixmap)
 
+        painter.setPen(QColor(Qt.red))
+        #painter.drawPixmap(self.rect(), self.pixmap)
         if self.start_point and self.end_point and (self.state == 1 or self.state == 2 ):          
+            painter.setPen(QColor(Qt.red))
             painter.drawRect(self.start_point.x(), self.start_point.y(),
                              self.end_point.x() - self.start_point.x(),
                              self.end_point.y() - self.start_point.y())
-        
+                
         for obj in self.__region_list:
             pos = obj.get_region()
             painter.drawRect(pos[0], pos[1],
