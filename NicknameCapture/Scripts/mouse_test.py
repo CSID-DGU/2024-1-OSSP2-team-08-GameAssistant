@@ -137,7 +137,7 @@ class NicknameCapture:
         print(nickname_list) #for test
 
 #testcode
-capture=NicknameCapture('./Regions.json', './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+capture=NicknameCapture("NicknameCapture/JSON/SaveDate.json", './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 
 #capture when hotkey pressed
 capture.start_hotkey()
