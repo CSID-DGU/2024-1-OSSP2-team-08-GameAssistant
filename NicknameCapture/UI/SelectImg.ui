@@ -118,8 +118,6 @@
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="Test/testResource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
