@@ -64,12 +64,11 @@ class NicknameCapture:
             for region in self.__region_list:
                 print(region.get_name(), region.get_region()) #test, delete after
 
-    def start_hotkey(self): #delete after
+    def start_hotkey(self):
         with HotKeys({
-        '<shift>+d': self.on_activate_drag,
-        '<shift>+s': self.save_json}) as h:
+        '<shift>+s': self.on_capture_image_button}) as h:
             h.join()
-
+            
     def on_click(self, x, y, button, pressed): #get region and add in __region_list
         if pressed:
             print('on_pressed') #test, delete after
@@ -100,8 +99,12 @@ class NicknameCapture:
         with open(self.__json_file_path, 'w') as outfile:
             json.dump(json_data, outfile, indent=2)
 
-        return False
 
+    def on_capture_image_button(self):
+        self.capture_images()
+        self.get_text_from_image()
+
+        
     def capture_images(self): #capture all images in region
         print('on_save_image') #test, delete after
         for idx, region in enumerate(self.__region_list):
@@ -119,15 +122,14 @@ class NicknameCapture:
                                 width, height))
 
     def get_text_from_image(self):
-        i=0
-        while True:
-            try:
-                image=Image.open(self.__image_folder_path + 'image' + str(i) +'.png')
-                i+=1
-            except FileNotFoundError:
-                break
-            else:
-                text = pytesseract.image_to_string(image, lang='kor+eng',config='--psm 7')
+        nickname_list=[]
+        for idx, region in enumerate(self.__region_list):
+            image=Image.open(self.__image_folder_path + 'image' + str(idx) +'.png')
+            text = pytesseract.image_to_string(image, lang='kor+eng',config='--psm 7')
+            text=text[:-1] # delete \n
+            dic=dict(name = region.get_name(), nickname=str(text))
+            nickname_list.append(dic)
+        print(nickname_list) #for test
                 
 
 a=NicknameCapture('./Regions.json', './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
