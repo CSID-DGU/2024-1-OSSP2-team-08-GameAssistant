@@ -41,6 +41,7 @@ class NicknameCapture:
         self.__json_file_path = json_file_path #get file path as parameter
         self.__image_folder_path = image_folder_path #get image folder path as parameter
         pytesseract.pytesseract.tesseract_cmd = tesseract_file_path #tesseract .exe path
+        self.__image_list = []
         self.__region_list= []
         self.__load_json()
 
@@ -68,7 +69,7 @@ class NicknameCapture:
         with HotKeys({
         '<shift>+s': self.on_capture_image_button}) as h:
             h.join()
-            
+
     def on_click(self, x, y, button, pressed): #get region and add in __region_list
         if pressed:
             print('on_pressed') #test, delete after
@@ -103,11 +104,14 @@ class NicknameCapture:
     def on_capture_image_button(self):
         self.capture_images()
         self.get_text_from_image()
+        return False
 
         
     def capture_images(self): #capture all images in region
         print('on_save_image') #test, delete after
+        image_list=[]
         for idx, region in enumerate(self.__region_list):
+
             width=region.get_width()
             height=region.get_height()
             rect = region.get_region()
@@ -116,21 +120,24 @@ class NicknameCapture:
             #capture image
             #rect = [x1, y1, x2, y2]
             #path/image0.png, path/image1.png ...
-            pygui.screenshot(self.__image_folder_path + 'image' + str(idx) + '.png',\
-                                region=(rect[0] if rect[0]<rect[2] else rect[2],
-                                rect[1] if rect[1]<rect[3] else rect[3],
-                                width, height))
+            img = pygui.screenshot(region=(rect[0] if rect[0]<rect[2] else rect[2],\
+                                     rect[1] if rect[1]<rect[3] else rect[3],
+                                     width, height))
+            image_list.append(img)
+
+        self.__image_list = image_list
 
     def get_text_from_image(self):
         nickname_list=[]
         for idx, region in enumerate(self.__region_list):
-            image=Image.open(self.__image_folder_path + 'image' + str(idx) +'.png')
-            text = pytesseract.image_to_string(image, lang='kor+eng',config='--psm 7')
+            text = pytesseract.image_to_string(self.__image_list[idx], lang='kor+eng',config='--psm 7')
             text=text[:-1] # delete \n
             dic=dict(name = region.get_name(), nickname=str(text))
             nickname_list.append(dic)
         print(nickname_list) #for test
-                
 
-a=NicknameCapture('./Regions.json', './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
-a.get_text_from_image()
+#testcode
+capture=NicknameCapture('./Regions.json', './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+
+#capture when hotkey pressed
+capture.start_hotkey()
