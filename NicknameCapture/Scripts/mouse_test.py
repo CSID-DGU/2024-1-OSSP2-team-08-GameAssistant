@@ -4,7 +4,10 @@ from pynput.keyboard import Controller
 import pyautogui as pygui
 import json
 
-class Region:
+from PIL import Image
+import pytesseract
+
+class Region: #json region struct
     def __init__(self, name, start_pos, end_pos):
         self.__name = name
         self.__region = [0, 0, 0, 0]
@@ -32,19 +35,22 @@ class Region:
         return self.__region
 
 class NicknameCapture:
-    def __init__(self):
+    def __init__(self, json_file_path, image_folder_path, tesseract_file_path):
         self.__start_pos = []
         self.__end_pos = []
-        self.__file_path = "./Regions.json"
+        self.__json_file_path = json_file_path #get file path as parameter
+        self.__image_folder_path = image_folder_path #get image folder path as parameter
+        pytesseract.pytesseract.tesseract_cmd = tesseract_file_path #tesseract .exe path
         self.__region_list= []
         self.__load_json()
 
         
-    def __load_json(self):
+    def __load_json(self): #load json data from file at init
         try:
-            with open(self.__file_path, "r") as json_file:
+            with open(self.__json_file_path, "r") as json_file:
                 json_data = json.load(json_file)
         except FileNotFoundError:
+            #when no file
             print("File not exist")
         except json.decoder.JSONDecodeError:
             #when wrong json
@@ -56,49 +62,73 @@ class NicknameCapture:
                                           [region["region"][2], region["region"][3]]))
                 
             for region in self.__region_list:
-                print(region.get_name(), region.get_region())
+                print(region.get_name(), region.get_region()) #test, delete after
 
-    def start_hotkey(self):
+    def start_hotkey(self): #delete after
         with HotKeys({
         '<shift>+d': self.on_activate_drag,
-        '<shift>+s': self.on_save_json}) as h:
+        '<shift>+s': self.save_json}) as h:
             h.join()
 
-    def on_click(self, x, y, button, pressed):    
+    def on_click(self, x, y, button, pressed): #get region and add in __region_list
         if pressed:
-            print('on_pressed')
+            print('on_pressed') #test, delete after
             self.__start_pos.append(x)
             self.__start_pos.append(y)
         if not pressed:
-            print('on_release')
+            print('on_release') #test, delete after
             self.__end_pos.append(x)
             self.__end_pos.append(y)
             self.__region_list.append(Region("", self.__start_pos, self.__end_pos))
             return False
 
     
-    def on_activate_drag(self):
-        #shift + d
-        print('on_act_start')
+    def on_activate_drag(self): #start setting region
+        print('on_act_start') #test, delete after
         with Listener(on_click=self.on_click) as l:
             l.join()
 
         return False
 
-    def on_save_json(self):
-        #shift + s
-        print('on_save')
+    def save_json(self):
+        print('on_save') #test, delete after
         json_data = []
         for reg in self.__region_list:
             dic = reg.get_dict()
             json_data.append(dic)
 
-        with open(self.__file_path, 'w') as outfile:
+        with open(self.__json_file_path, 'w') as outfile:
             json.dump(json_data, outfile, indent=2)
 
         return False
 
+    def capture_images(self): #capture all images in region
+        print('on_save_image') #test, delete after
+        for idx, region in enumerate(self.__region_list):
+            width=region.get_width()
+            height=region.get_height()
+            rect = region.get_region()
+            if(width == 0 | height == 0): #continue if wrong region
+                continue
+            #capture image
+            #rect = [x1, y1, x2, y2]
+            #path/image0.png, path/image1.png ...
+            pygui.screenshot(self.__image_folder_path + 'image' + str(idx) + '.png',\
+                                region=(rect[0] if rect[0]<rect[2] else rect[2],
+                                rect[1] if rect[1]<rect[3] else rect[3],
+                                width, height))
 
-a=NicknameCapture()
-a.start_hotkey()
-  
+    def get_text_from_image(self):
+        i=0
+        while True:
+            try:
+                image=Image.open(self.__image_folder_path + 'image' + str(i) +'.png')
+                i+=1
+            except FileNotFoundError:
+                break
+            else:
+                text = pytesseract.image_to_string(image, lang='kor+eng',config='--psm 7')
+                
+
+a=NicknameCapture('./Regions.json', './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+a.get_text_from_image()
