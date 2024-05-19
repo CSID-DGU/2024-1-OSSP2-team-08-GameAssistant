@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QPainter, QColor
 
-ImgSelectWindowSource = uic.loadUiType("NicknameCapture/UI/SelectImg.ui")[0]
-CaptureHelperSource = uic.loadUiType("NicknameCapture/UI/CaptureHelper.ui")[0]
+ImgSelectWindowSource = uic.loadUiType("Data/UI/NickNameCapture/SelectImg.ui")[0]
+CaptureHelperSource = uic.loadUiType("Data/UI/NickNameCapture/CaptureHelper.ui")[0]
 
 class ImgSelectUI(QWidget, ImgSelectWindowSource):
     def __init__(self):
@@ -81,6 +81,8 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
     
     def Btn_EnterName(self):
         name = self.sectionNameInput.text()
+        if name == "":
+            return
         self.__region_list.append(Region(name, [self.start_point.x(), self.start_point.y()], [self.end_point.x(), self.end_point.y()]))
         self.mainMenuFrame.show()
         self.sectionNameFrame.hide()
@@ -137,6 +139,7 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
             self.end_point = event.pos()
             self.state = 2
             self.sectionNameFrame.show()
+            self.sectionNameInput.setFocus()
             self.update()
 
     def paintEvent(self, event):

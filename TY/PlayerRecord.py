@@ -6,8 +6,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 
-RecordWindowSource = uic.loadUiType("RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -92,13 +92,13 @@ class MatchUI(QWidget, MatchScoreSource):
 
         if not MatchJsonInfo.isWinOrLose:
             if playerRank == 1:
-                self.Result.setStyleSheet("color: blue")
-                self.Result.setText("승리")               
-                self.MatchFrame.setStyleSheet("background-color: rgb(236, 242, 255)")
+                #self.Result.setStyleSheet("color: blue")
+                self.Result.setText("<span style='color: blue; font-size:15px;'>승리")               
+                #self.MatchFrame.setStyleSheet("background-color: rgb(236, 242, 255)")
             elif playerRank == 2:
-                self.Result.setStyleSheet("color: red")
-                self.Result.setText("패배")          
-                self.MatchFrame.setStyleSheet("background-color: rgb(255, 241, 243)")
+                #self.Result.setStyleSheet("color: red")
+                self.Result.setText("<span style='color: red; font-size:15px;'>패배")          
+                #self.MatchFrame.setStyleSheet("background-color: rgb(255, 241, 243)")
         else:
             self.Result.setText(playerRank,"위")
             if playerRank == 1:
@@ -110,14 +110,14 @@ class MatchUI(QWidget, MatchScoreSource):
         
         
         self.MatchTime.setText(str(matchTime//60)+"분 "+str(matchTime%60)+"초")
-        self.KDA.setText(str(playerKill)+"/"+"<span style='color: red;'>"+str(playerDeath)+"</span>"+"/"+str(playerAssistant))
-        self.KDALate.setText("KDA: "+"Perfact" if playerDeath == 0 else str(round((playerKill+playerAssistant)/playerDeath,1)))
-        self.DMG.setText("DMG: "+str(playerDMG))
+        self.KDA.setText("<span style='font-size:19px;'>"+str(playerKill)+" / "+"<span style='color: red;'>"+str(playerDeath)+"</span>"+" / "+str(playerAssistant)+"</span>")
+        self.KDALate.setText("<span style='font-size:15px;'>"+"KDA: "+ ("Perfact" if playerDeath == 0 else str(round((playerKill+playerAssistant)/playerDeath,1)))+"</span>")
+        self.DMG.setText("<span style='font-size:15px;'>"+"DMG: "+str(playerDMG)+"</span>")
 
         if playerMMRGain > 0:
-            self.MMR.setText("MMR: "+str(playerMMRAfter)+"<span style='color: blue;'> ▲"+str(playerMMRGain)+"</span>")
+            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: blue;'> ▲"+str(playerMMRGain)+"</span>"+"</span>")
         else:
-            self.MMR.setText("MMR: "+str(playerMMRAfter)+"<span style='color: red;'> ▼"+str(-playerMMRGain)+"</span>")
+            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: red;'> ▼"+str(-playerMMRGain)+"</span>"+"</span>")
         
         
         self.CharIMG.setPixmap(QPixmap(("CharImg/"+str(playerCharCode)+".png")))
@@ -125,12 +125,12 @@ class MatchUI(QWidget, MatchScoreSource):
 
 #region function
 def API_GetPlayerInfo(playerID):
-    file = open("test/PlayerJson.json", 'r', encoding='utf-8') #for Debug
+    file = open("TY/Test/PlayerJson.json", 'r', encoding='utf-8') #for Debug, Fix Later
     playerJsonObj = json.load(file)
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID, num):
-    file = open("test/MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug
+    file = open("TY/Test/MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
     matchJsonObj = json.load(file)
     return matchJsonObj
 
