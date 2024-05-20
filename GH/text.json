@@ -1,0 +1,4 @@
+{
+	"GetUserNumber" : "user/nickname?query={nickname}",
+	"TopRankers" : "rank/top/{seasonId}/{matchingTeamMode}"
+}
