@@ -9,6 +9,7 @@ class UI_MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setupUi()
+        self.initialize()
 
     def setupUi(self):
         window_height = 720
@@ -219,6 +220,9 @@ class UI_MainWindow(QWidget):
                                    "border-radius: 3px;")
         self.button5.setGeometry(325, 0, 50, 50)
         self.button5.clicked.connect(lambda:self.sortTiers(3))
+
+    def initialize(self):
+        pass
 
     def filterButtons(self, text):
         text = text.replace(" ", "")
