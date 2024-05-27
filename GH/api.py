@@ -3,38 +3,60 @@ import requests
 from urllib import parse
 
 class APIFactory:
-    def __init__(self, file_link, api_key, base_link):
+    def __init__(self, file_link: str):
         self.__file_link=file_link
-        self.api_key = api_key
-        self.base_link = base_link
-
-    def get_request_url(self, func_name, **args):
-        data={}
         try:
-            with open(self.__file_link) as f:
-                data = json.load(f)
+            f=open(self.__file_link)
         except Exception as e:
-            print(f"{e}")
-
-        for key, val in args.items():
-            args[key] = parse.quote(val)
+            raise e
         
-        if func_name in data:
-            return self.base_link + data[func_name].format(**args)
+        try:
+            self.__init_data = json.load(f)
+        except Exception as e:
+            f.close()
+            raise e
+
+        f.close()
+
+        try:
+            self.__api_key=self.__init_data['api_key']
+            self.__base_url=self.__init_data['base_url']
+        except Exception as e:
+            raise e
+
+    #make request url
+    #args mapped into json data
+    def _get_request_url(self, func_name: str, url_args: dict , encode : bool = False) -> str:
+        #encode text to url encoding
+        if encode:
+            for key, val in url_args.items():
+                url_args[key] = parse.quote(val)
+
+        #return request url
+        if func_name in self.__init_data:
+            return self._make_url(func_name, url_args)
         else:
             return None
 
+    #can be overrided
+    def _make_url(self, func_name : str, url_args : dict):
+        return self.__base_url + self.__init_data[func_name].format(**url_args)
 
-file_link = r"C:\Users\신기환\OneDrive\Desktop\동국대 수업\2024년 1학기\공개SW프로젝트\text.json"
-api_key = "fbTETbo0ur2sQe5bBTpin47qzJYQzk6M4R2jzWV4"
-base_link = "https://open-api.bser.io/"
+    def _get_api_data(self, request_url : str, params : dict = None, headers : dict = None, cookies : dict = None):
 
-a=APIFactory(file_link, api_key, base_link)
+        r=requests.get(request_url, headers = headers)
+        #raise error if wrong status
+        r.raise_for_status()
+            
+        return r
 
-url = a.get_request_url("GetUserNumber", nickname="한동그라미")
+    #must be overrided
+    def get_user_data(self):
+        return
 
-headers = { "accept" : "application/json", "x-api-key" : "fbTETbo0ur2sQe5bBTpin47qzJYQzk6M4R2jzWV4" }
-    
-r = requests.get(url, headers=headers)
+    def get_match_data(self):
+        return
 
-print(r.json())
+
+
+

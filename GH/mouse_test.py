@@ -3,13 +3,6 @@ from pynput.keyboard import GlobalHotKeys as HotKeys
 from pynput.keyboard import Controller
 import pyautogui as pygui
 
-"""
-{
-    region1:"ddd"
-    region2:"ddd"
-}
-"""
-
 point_list = []
 
 def on_click(x, y, button, pressed):
@@ -51,31 +44,3 @@ with HotKeys({
         '<shift>+d': on_activate_drag,
         '<shift>+s': on_save_images}) as h:
     h.join()
-
-    
-"""
-start_pos=[]
-end_pos=[]
-
-def on_click(x, y, button, pressed):
-    if pressed:
-        global start_pos
-        start_pos = [x, y]
-    if not pressed:
-        global end_pos
-        end_pos = [x, y]
-        return False
-
-with Listener(
-        on_click=on_click) as listener:
-    listener.join()
-
-idx=0
-for i in json_data:
-    width=abs(i[0] - i[2])
-    height=abs(i[1] - i[3])#범위 똑같으면 에러, 드래그 방향 좌우
-    pygui.screenshot('./capture_image/test' + str(idx) + '.png',\
-                     region=(i[0], i[1], width, height))
-    idx+=1
-    print(i[0], i[1], i[2], i[3])
-"""
