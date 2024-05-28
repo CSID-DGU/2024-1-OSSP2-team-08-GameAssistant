@@ -16,9 +16,9 @@
   <widget class="QWidget" name="MatchFrame" native="true">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>10</x>
      <y>40</y>
-     <width>931</width>
+     <width>760</width>
      <height>150</height>
     </rect>
    </property>
@@ -36,7 +36,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>1000</width>
+     <width>760</width>
      <height>150</height>
     </size>
    </property>

@@ -36,6 +36,8 @@ class RecordFrameUI(QWidget, RecordWindowSource):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.MatchesLayout.addItem(self.spacer)
 
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
@@ -57,6 +59,9 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         matchObj = MatchUI()
         matchObj.SetInfo(jsonObj)
         self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
+
+
+
 
 class MatchUI(QWidget, MatchScoreSource):
     def __init__(self):
@@ -138,7 +143,7 @@ def API_GetPlayerMatchInfo(playerID, num):
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
-
+    
     recordFrameObj = RecordFrameUI()
     recordFrameObj.show()
 
@@ -147,5 +152,13 @@ if __name__ == "__main__" :
     #for Debug
     recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
     recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
     app.exec_()
