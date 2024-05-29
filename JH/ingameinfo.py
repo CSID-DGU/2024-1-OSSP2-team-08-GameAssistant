@@ -305,8 +305,6 @@ class Ui_MainWindow(object):
             _translate("MainWindow", "<html><head/><body><p align=\"center\">opponent champion</p></body></html>"))
 
     def initialize(self):
-        """초기화 작업 수행"""
-        # 여기에 초기화 작업을 추가할 수 있습니다.
         pass
 
 
