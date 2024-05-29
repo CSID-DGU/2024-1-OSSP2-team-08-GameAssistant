@@ -36,7 +36,6 @@ class RecordFrameUI(QMainWindow, RecordWindowSource):
         self.initialized = False
 
     def initialize(self):
-        pass
         if not self.initialized:
             self.SetPlayerInfo(self.load_player_info())
             for i in range(1, len(os.listdir("./Test"))):
