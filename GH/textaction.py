@@ -14,7 +14,7 @@ class APIconnect(QWidget, MatchUi_Sample):
         self.setupUi(self)
         
     def json_PlayerInfo(self, jsonObj):
-        result = jsonOb["gameRank"]
+        result = jsonObj["gameRank"]
         playerCharcode = jsonObj["characterNum"] #실험체의 번호
         Nickname = jsonObj["nickname"]
         teamKill = jsonObj["teamKill"]
@@ -23,11 +23,11 @@ class APIconnect(QWidget, MatchUi_Sample):
         playerAssistant = jsonObj["playerAssistant"]
         playerDMG = jsonObj["damageToPlayer"]
     
-        self.rank_label.setText(result)
-        self.charcode_label.setPixmap(QPixmap("./" + playerCharcode + ".png")) #이미지 파일 경로지정
+        self.rank_label.setText(str(result))
+        self.charcode_label.setPixmap(QPixmap("./" + str(playerCharcode) + ".png")) #이미지 파일 경로지정
         self.nickname_label.setText(Nickname)
-        self.KDA_label.setText(teamKill + "/" + playerKill + "/" + playerDeath + "/" + playerAssistant)
-        self.damage_label.setText(playerDMG)
+        self.KDA_label.setText(str(teamKill) + "/" + str(playerKill) + "/" + str(playerDeath) + "/" + str(playerAssistant))
+        self.damage_label.setText(str(playerDMG))
             
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -3,38 +3,38 @@ import json
 from PIL import Image
 import pytesseract
 
-class NicknameCapture:
-    class Region: #json region struct
-        def __init__(self, name : str, start_pos : list, end_pos : list):
-            self.__name = name
-            self.__region = [0, 0, 0, 0]
-            self.__region[0] = start_pos[0] #x1
-            self.__region[1] = start_pos[1] #y1
-            self.__region[2] = end_pos[0] #x2
-            self.__region[3] = end_pos[1] #y2
+class Region: #json region struct
+    def __init__(self, name : str, start_pos : list, end_pos : list):
+        self.__name = name
+        self.__region = [0, 0, 0, 0]
+        self.__region[0] = start_pos[0] #x1
+        self.__region[1] = start_pos[1] #y1
+        self.__region[2] = end_pos[0] #x2
+        self.__region[3] = end_pos[1] #y2
 
-        def get_width(self):
-            return abs(self.__region[0] - self.__region[2])
+    def get_width(self):
+        return abs(self.__region[0] - self.__region[2])
 
-        def get_height(self):
-            return abs(self.__region[1] - self.__region[3])
+    def get_height(self):
+        return abs(self.__region[1] - self.__region[3])
 
-        def get_dict(self):
-            return {"name" : self.__name, "region" : self.__region}
+    def get_dict(self):
+        return {"name" : self.__name, "region" : self.__region}
 
-        def set_name(self, name):
-            self.__name = name
+    def set_name(self, name):
+        self.__name = name
 
-        def get_name(self):
-            return self.__name
-        
-        def get_region(self):
-            return self.__region
-
-        def get_start_pos(self): #get left-up point of rect
-            return [self.__region[0] if self.__region[0] < self.__region[2] else self.__region[2]\
-                    , self.__region[1] if self.__region[1] < self.__region[3] else self.__region[3]]
+    def get_name(self):
+        return self.__name
     
+    def get_region(self):
+        return self.__region
+
+    def get_start_pos(self): #get left-up point of rect
+        return [self.__region[0] if self.__region[0] < self.__region[2] else self.__region[2]\
+                , self.__region[1] if self.__region[1] < self.__region[3] else self.__region[3]]
+
+class NicknameCapture:    
     def __init__(self, json_file_path : str, tesseract_file_path:str):
         self.__start_pos = []
         self.__end_pos = []
@@ -71,9 +71,7 @@ class NicknameCapture:
             #capture image
             #rect = [x1, y1, x2, y2]
             #path/image0.png, path/image1.png ...
-            img = pygui.screenshot(region=(rect[0] if rect[0]<rect[2] else rect[2],\
-                                     rect[1] if rect[1]<rect[3] else rect[3],
-                                     width, height))
+            img = pygui.screenshot(region=(start_pos[0], start_pos[1], width, height))
             image_list.append(img)
 
         return image_list
@@ -92,3 +90,4 @@ class NicknameCapture:
 
 
 
+NicknameCapture('./SaveDate.json', r'C:\Program Files\Tesseract-OCR\tesseract.exe')

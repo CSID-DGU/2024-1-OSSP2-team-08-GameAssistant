@@ -1,6 +1,7 @@
 import json
 import requests
 from urllib import parse
+import time
 
 class APIFactory:
     def __init__(self, file_link: str):
@@ -53,10 +54,15 @@ class APIFactory:
     def get_user_data(self, nickname : str, seasonId : str):
         s=self._get_request_url("GetUserNumber", {'nickname':nickname})
         headers = { "accept" : "application/json", "x-api-key" : "fbTETbo0ur2sQe5bBTpin47qzJYQzk6M4R2jzWV4" }
-        user_num=self._get_api_data(s, headers=headers).json()['user']['userNum']
+        response=self._get_api_data(s, headers=headers).json()
+        time.sleep(1)
+        if response['code'] == 404:
+            return None
+        user_num=response['user']['userNum']
         
         s=self._get_request_url("GetUserStats", {'userNum':user_num, 'seasonId': seasonId})
         user_stats=self._get_api_data(s, headers=headers).json()['userStats'][0]
+        time.sleep(1)
 
         return { 'nickname' : user_stats['nickname'], 'mmr' : user_stats['mmr'],\
                  'totalGames':user_stats['totalGames'], 'totalWins' : user_stats['totalWins']}
@@ -65,23 +71,28 @@ class APIFactory:
     def get_match_data(self, nickname : str):
         s=self._get_request_url("GetUserNumber", {'nickname':nickname})
         headers = { "accept" : "application/json", "x-api-key" : "fbTETbo0ur2sQe5bBTpin47qzJYQzk6M4R2jzWV4" }
-        user_num=self._get_api_data(s, headers=headers).json()['user']['userNum']
+        response=self._get_api_data(s, headers=headers).json()
+        time.sleep(1)
+        if response['code'] == 404:
+            return None
+        user_num=response['user']['userNum']
 
         s=self._get_request_url("GetUserGames", { 'userNum' : user_num})
         user_matches=self._get_api_data(s, headers=headers).json()['userGames']
+        time.sleep(1)
         match_data_list = []
         for match in user_matches:
             death = match['playerDeaths']
-            if death == 0:
-                death=1
-            kda= (match['playerKill'] + match['playerAssistant']) / death
+            kill=match['playerKill']
+            assist=match['playerAssistant']
 
             mmrBefore = match['mmrBefore'] if 'mmrBefore' in match else 0
             mmrAfter = match['mmrAfter'] if 'mmrAfter' in match else 0
             
-            match_data_list.append({ 'kda' : kda, 'damageToPlayer': match['damageToPlayer'],\
-              'mmrBefore' : mmrBefore, 'mmrAfter' : mmrAfter,\
-              'gameRank' : match['gameRank'], 'playTime': match['playTime']})
+            match_data_list.append({'gameRank':match['gameRank'], 'characterNum':match['characterNum'],\
+                                    'nickname':match['nickname'], 'teamKill':match['teamKill'],\
+                                    'playerKill':kill, 'playerDeaths':death, 'playerAssistant':assist,\
+                                    'damageToPlayer':match['damageToPlayer']})
 
         return match_data_list
 
