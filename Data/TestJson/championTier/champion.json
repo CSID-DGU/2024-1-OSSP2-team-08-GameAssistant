@@ -1,0 +1,28 @@
+{
+    "data": {
+        "Ahri": {
+            "name": "아리",
+            "Winrate": 47.56,
+            "Pickrate": 6.89,
+            "Banrate": 1.22
+        },
+        "Garen": {
+            "name": "가렌",
+            "Winrate": 49.72,
+            "Pickrate": 10.95,
+            "Banrate": 0.87
+        },
+        "Veigar": {
+            "name": "베이가",
+            "Winrate": 56.70,
+            "Pickrate": 0.25,
+            "Banrate": 0.16
+        },
+        "Nico": {
+            "name": "니코",
+            "Winrate": 42.37,
+            "Pickrate": 2.28,
+            "Banrate": 6.98
+        }
+    }
+}

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore
 
-class UI_MainWindow(QWidget):
+class TierUI(QWidget):
     def __init__(self):
         super().__init__()
         self.setupUi()
@@ -41,7 +41,7 @@ class UI_MainWindow(QWidget):
         for tier_icon_file in tier_icon_files:
             tier_icon_path.append(os.path.join(tier_icon_folder, tier_icon_file))
 
-        file = open('champion/champion.json', 'r', encoding='utf-8')
+        file = open('./Data/TestJson/championTier/champion.json', 'r', encoding='utf-8')
         c_file = json.load(file)
         self.c_lists = [[] for i in range(c_file["data"].__len__())]
         i = 0

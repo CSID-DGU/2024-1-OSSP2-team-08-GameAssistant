@@ -8,7 +8,7 @@ from PlayerRecord import RecordFrameUI
 from ingameinfo import Ui_MainWindow as InGameInfoUI
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'Scripts'))
-from UITest import ImgSelectUI
+#from UITest import ImgSelectUI
 
 class MainUI(QWidget):
     def __init__(self):

@@ -39,6 +39,8 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.MatchesLayout.addItem(self.spacer)
 
+        self.UpdateData()
+
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
         playerName = jsonObj[PlayerJsonInfo.playerName]
@@ -54,11 +56,25 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.PlayerImg.setPixmap(QPixmap(("PlayerImg/"+str(playerCharCode)+".png")))
         return
 
-
     def AddMatchFrame(self, jsonObj):
         matchObj = MatchUI()
         matchObj.SetInfo(jsonObj)
         self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
+
+    def UpdateData(self):
+            self.SetPlayerInfo(API_GetPlayerInfo("abc"))
+
+            #for Debug
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
 
 
@@ -79,9 +95,6 @@ class MatchUI(QWidget, MatchScoreSource):
         font.setPointSize(14)
         font.setBold(True)
         self.KDA.setFont(font)
-
-
-
 
     def SetInfo(self, jsonObj):
         playerRank = jsonObj[MatchJsonInfo.result]
@@ -146,19 +159,5 @@ if __name__ == "__main__" :
     
     recordFrameObj = RecordFrameUI()
     recordFrameObj.show()
-
-    recordFrameObj.SetPlayerInfo(API_GetPlayerInfo("abc"))
-
-    #for Debug
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
     app.exec_()
