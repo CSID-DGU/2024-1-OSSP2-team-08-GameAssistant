@@ -1,6 +1,7 @@
 import pyautogui as pygui
 import json
 from PIL import Image
+import pytesseract
 
 class NicknameCapture:
     class Region: #json region struct
@@ -34,12 +35,12 @@ class NicknameCapture:
             return [self.__region[0] if self.__region[0] < self.__region[2] else self.__region[2]\
                     , self.__region[1] if self.__region[1] < self.__region[3] else self.__region[3]]
     
-    def __init__(self, json_file_path : str, image_folder_path : str):
+    def __init__(self, json_file_path : str, tesseract_file_path:str):
         self.__start_pos = []
         self.__end_pos = []
         self.__json_file_path = json_file_path #get file path as parameter
-        self.__image_folder_path = image_folder_path #get image folder path as parameter
         self.__region_list= []
+        pytesseract.pytesseract.tesseract_cmd = tesseract_file_path
         self.__load_json()
 
         
@@ -58,27 +59,10 @@ class NicknameCapture:
             self.__region_list.append(Region(region["name"],\
                                         [region["region"][0], region["region"][1]],\
                                         [region["region"][2], region["region"][3]]))
-
-    def save_json(self):
-        json_data = []
-        for reg in self.__region_list:
-            dic = reg.get_dict()
-            json_data.append(dic)
-
-        try:
-            with open(self.__json_file_path, 'w') as outfile:
-                json.dump(json_data, outfile, indent=2)
-        except FileNotFoundError as e:
-            #when no file
-            raise e
-        except json.decoder.JSONDecodeError as e:
-            #when wrong json
-            raise e
         
     def capture_images(self): #capture all images in region
         image_list=[]
         for idx, region in enumerate(self.__region_list):
-
             width=region.get_width()
             height=region.get_height()
             start_pos = region.get_start_pos()
@@ -93,5 +77,18 @@ class NicknameCapture:
             image_list.append(img)
 
         return image_list
+
+    #OCR CODE
+    def __fix_image(self):
+        return
+
+    #get nickname from Image list
+    def get_nicknames(self, image_list : list):
+        nickname_list=[]
+        for img in image_list:
+            nickname=pytesseract.image_to_string(img, lang='kor+eng',config='--psm 7').strip()
+            nickname_list.append(nickname)
+        return nickname_list
+
 
 
