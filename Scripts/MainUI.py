@@ -1,13 +1,12 @@
 import sys
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QHBoxLayout, QStackedWidget, QMainWindow, QSpacerItem, QSizePolicy
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 
 from tier import TierUI
 from PlayerRecord import RecordFrameUI
 from ingameinfo import Ui_MainWindow as InGameInfoUI
-
 import Resources_rc
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'Scripts'))
