@@ -36,8 +36,13 @@ class RecordFrameUI(QWidget, RecordWindowSource):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.MatchesLayout = QVBoxLayout(self.scrollAreaWidgetContents_2)
+        self.scrollAreaWidgetContents_2.setLayout(self.MatchesLayout)
+
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.MatchesLayout.addItem(self.spacer)
+
+
 
         self.UpdateData()
 
@@ -70,11 +75,11 @@ class RecordFrameUI(QWidget, RecordWindowSource):
             self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
             self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
             self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            #self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
 
 

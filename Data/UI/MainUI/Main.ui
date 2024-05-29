@@ -169,7 +169,7 @@ background-color: rgb(90, 99, 108);
       <rect>
        <x>10</x>
        <y>5</y>
-       <width>61</width>
+       <width>171</width>
        <height>20</height>
       </rect>
      </property>
@@ -364,7 +364,7 @@ background-color: rgb(61, 67, 76);
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(90, 99, 108);</string>
+     <string notr="true"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -372,7 +372,7 @@ background-color: rgb(61, 67, 76);
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QWidget" name="MainWindowPage1" native="true"/>
+    <widget class="QWidget" name="MainWindowPage1"/>
    </widget>
   </widget>
  </widget>

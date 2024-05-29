@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1070</width>
-    <height>670</height>
+    <height>962</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(90, 99, 108);</string>
+    <string notr="true">background-color: rgba(0, 0, 0, 0);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -43,7 +43,7 @@
     <property name="styleSheet">
      <string notr="true">#PlayerInfoFrame{
 	background-color: rgb(42, 46, 52);
-	border: 2px solid rgb(116, 128, 139);
+	border: 2px solid rgb(42, 46, 52);
 	border-radius: 10px;
 }</string>
     </property>
@@ -139,7 +139,7 @@ border:0px;</string>
        <rect>
         <x>10</x>
         <y>290</y>
-        <width>81</width>
+        <width>91</width>
         <height>21</height>
        </rect>
       </property>
@@ -185,7 +185,7 @@ border:0px;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">	background-color: rgb(42, 46, 52);
-	border: 2px solid rgb(116, 128, 139);
+	border: 2px solidrgb(42, 46, 52);
 	border-radius: 10px;
 </string>
     </property>
@@ -210,9 +210,27 @@ border: 0px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>780</width>
+        <width>781</width>
         <height>630</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QScrollBar
+{
+background : rgb(42, 46, 52);
+}
+QScrollBar::handle
+{
+background :  rgb(42, 46, 52);
+}
+QScrollBar::handle::hover
+{
+background-color: rgb(62, 68, 77);
+}
+QScrollBar::handle::pressed
+{
+background-color: rgb(90, 99, 108);
+}</string>
       </property>
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -228,21 +246,10 @@ border: 0px;
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>763</width>
+         <width>755</width>
          <height>630</height>
         </rect>
        </property>
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>761</width>
-          <height>1631</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="MatchesLayout"/>
-       </widget>
       </widget>
      </widget>
     </widget>

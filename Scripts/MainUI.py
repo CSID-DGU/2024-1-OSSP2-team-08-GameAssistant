@@ -25,7 +25,6 @@ class MainUI(QWidget, MainUiSource):
         self.ui1 = TierUI()
 
         self.ui2 = RecordFrameUI()
-        self.ui2.UpdateData()
         self.ui3= QMainWindow()
 
         self.MainWindow.addWidget(self.ui1)
