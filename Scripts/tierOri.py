@@ -28,14 +28,14 @@ class TierUI(QWidget):
         tier_x = 10
         tier_y = 45
 
-        icons_folder = '.\\JH\\c_icons\\champ_icons'
+        icons_folder = '.\\JH\\c_icons\\ChampionIcon'
         icon_files = os.listdir(icons_folder)
         icon_path = []
         for icon_file in icon_files:
             icon_path.append(os.path.join(icons_folder, icon_file))
         icon_path.sort()
 
-        tier_icon_folder = '.\\JH\\c_icons\\tier_icons'
+        tier_icon_folder = '.\\JH\\c_icons\\TierIcons'
         tier_icon_files = os.listdir(tier_icon_folder)
         tier_icon_path = []
         for tier_icon_file in tier_icon_files:
@@ -268,6 +268,6 @@ class TierUI(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = UI_MainWindow()
+    window = TierUI()
     window.show()
     sys.exit(app.exec_())

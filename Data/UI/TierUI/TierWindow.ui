@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Frame</class>
+ <widget class="QFrame" name="Frame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1070</width>
+    <height>671</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <widget class="QFrame" name="TierListFrame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1070</width>
+     <height>670</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">#TierListFrame{
+background-color: rgb(42, 46, 52);
+border: 2px solidrgb(42, 46, 52);
+border-radius: 10px;
+}
+</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QFrame" name="TierFrame">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>30</y>
+      <width>1070</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(42, 46, 52);
+	border: 2px solidrgb(42, 46, 52);
+	border-radius: 10px;</string>
+    </property>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>-10</x>
+       <y>0</y>
+       <width>1050</width>
+       <height>630</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#scrollArea{
+background-color: rgb(42, 46, 52);
+}</string>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1050</width>
+        <height>630</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="TopBar">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1070</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:  rgb(59, 65, 71);
+border: 0px;
+border-top-radius: 10px;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="Tier">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>0</y>
+       <width>56</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border-radius: 0;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Tier&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Character">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>0</y>
+       <width>200</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border-radius: 0;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Character&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PickLateBtn">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>0</y>
+       <width>140</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:2px solid  rgb(90, 99, 108);
+border-right:1px solid  rgb(90, 99, 108);
+border-radius: 0;</string>
+     </property>
+     <property name="text">
+      <string>PickLate</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="WinLateBtn">
+     <property name="geometry">
+      <rect>
+       <x>770</x>
+       <y>0</y>
+       <width>140</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:2px solid  rgb(90, 99, 108);
+border-right:1px solid  rgb(90, 99, 108);
+border-left:1px solid  rgb(90, 99, 108);
+border-radius: 0;</string>
+     </property>
+     <property name="text">
+      <string>WinLate</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Top3Btn">
+     <property name="geometry">
+      <rect>
+       <x>910</x>
+       <y>0</y>
+       <width>140</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:2px solid  rgb(90, 99, 108);
+border-left:1px solid  rgb(90, 99, 108);
+border-radius: 0;</string>
+     </property>
+     <property name="text">
+      <string>Top3</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

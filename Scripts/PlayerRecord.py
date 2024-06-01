@@ -1,4 +1,4 @@
-import sys, os
+import sys
 import json
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
@@ -6,17 +6,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 
-current_dir = os.path.dirname(__file__)
-ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'Record', 'RecordFrame.ui')
-ui_file_path1 = os.path.abspath(ui_file_path1)
-ui_file_path2 = os.path.join(current_dir, '..', 'Data', 'UI', 'Record', 'MatchRecord.ui')
-ui_file_path2 = os.path.abspath(ui_file_path2)
-json_file_path1 = os.path.join(current_dir, '..', 'Data', 'TestJson', 'playerJson', 'PlayerJson.json')
-json_file_path1 = os.path.abspath(json_file_path1)
-json_file_path2 = os.path.join(current_dir, '..', 'Data', 'TestJson', 'playerJson')
-json_file_path2 = os.path.abspath(json_file_path2)
-RecordWindowSource = uic.loadUiType(ui_file_path1)[0]
-MatchScoreSource = uic.loadUiType(ui_file_path2)[0]
+RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -157,12 +148,12 @@ class MatchUI(QWidget, MatchScoreSource):
 
 #region function
 def API_GetPlayerInfo(playerID):
-    file = open(json_file_path1, 'r', encoding='utf-8') #for Debug, Fix Later
+    file = open("TY/Test/PlayerJson.json", 'r', encoding='utf-8') #for Debug, Fix Later
     playerJsonObj = json.load(file)
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID, num):
-    file = open(json_file_path2+"\\MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
+    file = open("TY/Test/MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
     matchJsonObj = json.load(file)
     return matchJsonObj
 
