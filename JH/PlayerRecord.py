@@ -1,4 +1,4 @@
-import sys
+import sys, os
 import json
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
@@ -6,8 +6,17 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 
-RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
+current_dir = os.path.dirname(__file__)
+ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'Record', 'RecordFrame.ui')
+ui_file_path1 = os.path.abspath(ui_file_path1)
+ui_file_path2 = os.path.join(current_dir, '..', 'Data', 'UI', 'Record', 'MatchRecord.ui')
+ui_file_path2 = os.path.abspath(ui_file_path2)
+json_file_path1 = os.path.join(current_dir, '..', 'Data', 'Json', 'playerJson', 'PlayerJson.json')
+json_file_path1 = os.path.abspath(json_file_path1)
+json_file_path2 = os.path.join(current_dir, '..', 'Data', 'Json', 'playerJson')
+json_file_path2 = os.path.abspath(json_file_path2)
+RecordWindowSource = uic.loadUiType(ui_file_path1)[0]
+MatchScoreSource = uic.loadUiType(ui_file_path2)[0]
 
 #region Class
 class MatchJsonInfo():
@@ -36,8 +45,15 @@ class RecordFrameUI(QWidget, RecordWindowSource):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.MatchesLayout = QVBoxLayout(self.scrollAreaWidgetContents_2)
+        self.scrollAreaWidgetContents_2.setLayout(self.MatchesLayout)
+
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.MatchesLayout.addItem(self.spacer)
+
+
+
+        self.UpdateData()
 
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
@@ -54,11 +70,25 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.PlayerImg.setPixmap(QPixmap(("PlayerImg/"+str(playerCharCode)+".png")))
         return
 
-
     def AddMatchFrame(self, jsonObj):
         matchObj = MatchUI()
         matchObj.SetInfo(jsonObj)
         self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
+
+    def UpdateData(self):
+            self.SetPlayerInfo(API_GetPlayerInfo("abc"))
+
+            #for Debug
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
 
 
@@ -79,9 +109,6 @@ class MatchUI(QWidget, MatchScoreSource):
         font.setPointSize(14)
         font.setBold(True)
         self.KDA.setFont(font)
-
-
-
 
     def SetInfo(self, jsonObj):
         playerRank = jsonObj[MatchJsonInfo.result]
@@ -130,12 +157,12 @@ class MatchUI(QWidget, MatchScoreSource):
 
 #region function
 def API_GetPlayerInfo(playerID):
-    file = open("TY/Test/PlayerJson.json", 'r', encoding='utf-8') #for Debug, Fix Later
+    file = open(json_file_path1, 'r', encoding='utf-8') #for Debug, Fix Later
     playerJsonObj = json.load(file)
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID, num):
-    file = open("TY/Test/MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
+    file = open(json_file_path2+"\\MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
     matchJsonObj = json.load(file)
     return matchJsonObj
 
@@ -146,19 +173,5 @@ if __name__ == "__main__" :
     
     recordFrameObj = RecordFrameUI()
     recordFrameObj.show()
-
-    recordFrameObj.SetPlayerInfo(API_GetPlayerInfo("abc"))
-
-    #for Debug
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-    recordFrameObj.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
     app.exec_()
