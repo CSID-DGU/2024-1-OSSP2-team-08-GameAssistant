@@ -4,7 +4,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 
-from tier import TierUI
+from TierList import TierWindowUI
 from PlayerRecord import RecordFrameUI
 from ingameinfo import Ui_MainWindow as InGameInfoUI
 import Resources_rc
@@ -22,7 +22,7 @@ class MainUI(QWidget, MainUiSource):
 
         self.isDragbarClicked = False
 
-        self.ui1 = TierUI()
+        self.ui1 = TierWindowUI()
 
         self.ui2 = RecordFrameUI()
         self.ui3= QMainWindow()

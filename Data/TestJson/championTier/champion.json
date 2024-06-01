@@ -1,28 +1,32 @@
 {
     "data": {
-        "Ahri": {
-            "name": "아리",
-            "Winrate": 47.56,
-            "Pickrate": 6.89,
-            "Banrate": 1.22
-        },
-        "Garen": {
-            "name": "가렌",
-            "Winrate": 49.72,
-            "Pickrate": 10.95,
-            "Banrate": 0.87
-        },
-        "Veigar": {
-            "name": "베이가",
-            "Winrate": 56.70,
-            "Pickrate": 0.25,
-            "Banrate": 0.16
-        },
-        "Nico": {
-            "name": "니코",
-            "Winrate": 42.37,
-            "Pickrate": 2.28,
-            "Banrate": 6.98
-        }
+      "1": {
+        "code":  1,
+        "name": "재키",
+        "Winrate": 11.63,
+        "Pickrate": 4.02,
+        "Top3": 37.81
+      },
+      "2": {
+        "code": 2,
+        "name": "아야",
+        "Winrate": 12.11,
+        "Pickrate": 3.25,
+        "Top3": 36.66
+      },
+      "3": {
+        "code": 3,
+        "name": "피오라",
+        "Winrate": 11.59,
+        "Pickrate": 2.70,
+        "Top3": 38.60
+      },
+      "4": {
+        "code": 4,
+        "name": "매그너스",
+        "Winrate": 14.86,
+        "Pickrate": 2.54,
+        "Top3": 39.93
+      }
     }
 }
