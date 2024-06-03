@@ -42,8 +42,6 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.MatchesLayout.addItem(self.spacer)
 
-
-
         self.UpdateData()
 
     def SetPlayerInfo(self, jsonObj):
