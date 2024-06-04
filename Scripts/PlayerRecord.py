@@ -2,9 +2,9 @@ import sys
 import json
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-from PyQt5 import uic
+from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QCursor
 
 RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
 MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
@@ -42,7 +42,9 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.MatchesLayout.addItem(self.spacer)
 
-        self.UpdateData()
+        self.NameSearch.clicked.connect(self.UpdateData)
+        self.NameSearch.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.PlayerInfoFrame.hide()
 
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
@@ -65,22 +67,24 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
 
     def UpdateData(self):
-            self.SetPlayerInfo(API_GetPlayerInfo("abc"))
-
+            usernameSrc = self.NameInput.text()
             #for Debug
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.PlayerInfoFrame.show()
+            self.Nickname.setText(usernameSrc)
+            self.PlayerMMR.setText("")
+            self.WinLose.setText("")
+            self.Winlate.setText("")
 
-
-
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
+            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
 
 class MatchUI(QWidget, MatchScoreSource):
     def __init__(self):
@@ -154,7 +158,6 @@ def API_GetPlayerMatchInfo(playerID, num):
     file = open("TY/Test/MatchJson"+str(num)+".json", 'r', encoding='utf-8')#for Debug, Fix Later
     matchJsonObj = json.load(file)
     return matchJsonObj
-
 #region function end
 
 if __name__ == "__main__" :

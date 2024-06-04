@@ -31,7 +31,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QFrame" name="PlayerInfoFrame">
+   <widget class="QFrame" name="LeftFrame">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -41,7 +41,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#PlayerInfoFrame{
+     <string notr="true">#LeftFrame{
 	background-color: rgb(42, 46, 52);
 	border: 2px solid rgb(42, 46, 52);
 	border-radius: 10px;
@@ -53,38 +53,13 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="PlayerImg">
-     <property name="geometry">
-      <rect>
-       <x>45</x>
-       <y>25</y>
-       <width>151</width>
-       <height>151</height>
-      </rect>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 0, 255);</string>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="PlayerInfoFrame">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>80</y>
        <width>220</width>
-       <height>341</height>
+       <height>339</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -170,9 +145,84 @@ border:0px;</string>
        <string>9999승 9999패</string>
       </property>
      </widget>
+     <widget class="QLabel" name="PlayerImg">
+      <property name="geometry">
+       <rect>
+        <x>35</x>
+        <y>15</y>
+        <width>150</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(200, 200, 200);;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
-    <zorder>frame</zorder>
-    <zorder>PlayerImg</zorder>
+    <widget class="QLineEdit" name="NameInput">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>220</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(200, 200, 200);
+font: 9pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(13, 15, 19);
+border: 1px solid rgb(116, 128, 139);
+border-radius: 2px;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="NameSearch">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>50</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{
+border: 1px solid rgb(116, 128, 139);
+border-radius: 3px;
+font: 9pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(116, 128, 139), stop:1  rgb(90, 99, 108));
+}
+
+QPushButton:hover{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(116, 128, 139), stop:1  rgb(90, 99, 108));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(94, 104, 113), stop:1  rgb(71, 78, 85));
+}
+
+QPushButton:pressed{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(116, 128, 139), stop:1  rgb(90, 99, 108));
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(80, 89, 97), stop:1 rgb(59, 65, 71));
+}</string>
+     </property>
+     <property name="text">
+      <string>검색</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="MatchesFrame">
     <property name="geometry">
@@ -269,7 +319,7 @@ background-color: rgb(116, 128, 139);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>788</width>
+         <width>783</width>
          <height>650</height>
         </rect>
        </property>

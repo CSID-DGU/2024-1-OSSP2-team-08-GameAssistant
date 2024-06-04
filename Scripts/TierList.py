@@ -12,6 +12,10 @@ TierItemSource = uic.loadUiType("Data/UI/TierUI/TierItem.ui")[0]
 class TierWindowUI(QWidget, TierWindowSource):
     def __init__(self):
         super().__init__()
+
+        self.sortIndex = -1
+        self.sortIsReverse = True
+
         self.setupUi(self)
         self.TierLayout = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.TierLayout.setSpacing(0)
@@ -48,26 +52,48 @@ class TierWindowUI(QWidget, TierWindowSource):
             print(self.c_lists)
             i += 1
 
-        self.PickLateBtn.clicked.connect(lambda:self.sortTiers(1))
-        self.WinLateBtn.clicked.connect(lambda:self.sortTiers(2))
-        self.Top3Btn.clicked.connect(lambda:self.sortTiers(3))
+        self.Attribute01btn.clicked.connect(lambda:self.sortTiers(1))
+        self.Attribute02btn.clicked.connect(lambda:self.sortTiers(2))
+        self.Attribute03btn.clicked.connect(lambda:self.sortTiers(3))
+        self.Attribute01btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.Attribute02btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.Attribute03btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        
 
+        self.TierLayout.addItem(self.spacer)
         self.sortTiers(1)
 
     def sortTiers(self, num):
-        while self.TierLayout.count():
-            item = self.TierLayout.takeAt(0)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-
-        self.TierLayout.addItem(self.spacer)
-
         self.c_lists.sort(key = lambda x: x[num])
-        self.c_lists.reverse()
-        print(self.c_lists[0][-1])    
+        if self.sortIndex != num:
+            self.sortIsReverse = True
+            self.c_lists.reverse()
+            self.sortIndex = num
+        else:
+            if self.sortIsReverse:
+                self.sortIsReverse = False
+            else:
+                self.sortIsReverse = True
+                self.c_lists.reverse()
+        
+        if self.sortIndex == 1:
+            self.Attribute01btn.setChecked(True)
+            self.Attribute02btn.setChecked(False)
+            self.Attribute03btn.setChecked(False)
+        elif self.sortIndex == 2:
+            self.Attribute01btn.setChecked(False)
+            self.Attribute02btn.setChecked(True)
+            self.Attribute03btn.setChecked(False)
+        elif self.sortIndex == 3:
+            self.Attribute01btn.setChecked(False)
+            self.Attribute02btn.setChecked(False)
+            self.Attribute03btn.setChecked(True)
+        
+
         for i in range(self.c_lists.__len__()):
-            self.TierLayout.insertWidget(0, self.c_lists[i][-1].MatchFrame)
+            self.TierLayout.insertWidget(i, self.c_lists[i][-1].MatchFrame)
+
+        
 
 class TierItemUI(QWidget, TierItemSource):
     def __init__(self, c_list):

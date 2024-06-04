@@ -85,159 +85,6 @@ background-color: rgb(42, 46, 52);
         <height>640</height>
        </rect>
       </property>
-      <widget class="QWidget" name="MatchFrame" native="true">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>1070</width>
-         <height>70</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>1070</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1070</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#MatchFrame{
-border-bottom: 4px solid rgb(116, 128, 139);
-border-radius: 0px;
-background-color: rgb(90, 99, 108);
-}
-
-</string>
-       </property>
-       <widget class="QLabel" name="CharIMG">
-        <property name="geometry">
-         <rect>
-          <x>110</x>
-          <y>5</y>
-          <width>56</width>
-          <height>56</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="CharName">
-        <property name="geometry">
-         <rect>
-          <x>180</x>
-          <y>0</y>
-          <width>130</width>
-          <height>66</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 14pt &quot;KoPub돋움체 Bold&quot;;
-color: rgb(255, 255, 255);
-background-color: rgb(90, 99, 108);</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;CharName123&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="Attribute01">
-        <property name="geometry">
-         <rect>
-          <x>900</x>
-          <y>0</y>
-          <width>140</width>
-          <height>66</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;KoPub돋움체 Bold&quot;;
-color: rgb(255, 255, 255);
-background-color: rgb(90, 99, 108);</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;9999&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="TierIMG">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>5</y>
-          <width>56</width>
-          <height>56</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="Attribute02">
-        <property name="geometry">
-         <rect>
-          <x>760</x>
-          <y>0</y>
-          <width>140</width>
-          <height>66</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;KoPub돋움체 Bold&quot;;
-color: rgb(255, 255, 255);
-background-color: rgb(90, 99, 108);</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;99.99%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="Attribute03">
-        <property name="geometry">
-         <rect>
-          <x>620</x>
-          <y>0</y>
-          <width>140</width>
-          <height>66</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 9pt &quot;KoPub돋움체 Bold&quot;;
-color: rgb(255, 255, 255);
-background-color: rgb(90, 99, 108);</string>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;99.99%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </widget>
      </widget>
     </widget>
    </widget>
@@ -297,7 +144,7 @@ border-radius: 0;</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Character&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="PickLateBtn">
+    <widget class="QPushButton" name="Attribute01btn">
      <property name="geometry">
       <rect>
        <x>620</x>
@@ -307,17 +154,25 @@ border-radius: 0;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+      <string notr="true">QPushButton{
+font: 12pt &quot;KoPub돋움체 Bold&quot;;
 color: rgb(255, 255, 255);
 border-left: 2px solid  rgb(116, 128, 139);
 border-right:1px solid  rgb(116, 128, 139);
-border-radius: 0;</string>
+border-radius: 0;
+}
+QPushButton:checked{
+	background-color: rgb(116, 128, 139);
+}</string>
      </property>
      <property name="text">
       <string>PickLate</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="WinLateBtn">
+    <widget class="QPushButton" name="Attribute02btn">
      <property name="geometry">
       <rect>
        <x>760</x>
@@ -327,17 +182,25 @@ border-radius: 0;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+      <string notr="true">QPushButton{
+font: 12pt &quot;KoPub돋움체 Bold&quot;;
 color: rgb(255, 255, 255);
+border-left: 2px solid  rgb(116, 128, 139);
 border-right:1px solid  rgb(116, 128, 139);
-border-left:1px solid  rgb(116, 128, 139);
-border-radius: 0;</string>
+border-radius: 0;
+}
+QPushButton:checked{
+	background-color: rgb(116, 128, 139);
+}</string>
      </property>
      <property name="text">
       <string>WinLate</string>
      </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="Top3Btn">
+    <widget class="QPushButton" name="Attribute03btn">
      <property name="geometry">
       <rect>
        <x>900</x>
@@ -347,14 +210,22 @@ border-radius: 0;</string>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 12pt &quot;KoPub돋움체 Bold&quot;;
+      <string notr="true">QPushButton{
+font: 12pt &quot;KoPub돋움체 Bold&quot;;
 color: rgb(255, 255, 255);
-border-left:1px solid  rgb(116, 128, 139);
-border-right: 2px solid  rgb(116, 128, 139);
-border-radius: 0;</string>
+border-left: 2px solid  rgb(116, 128, 139);
+border-right:1px solid  rgb(116, 128, 139);
+border-radius: 0;
+}
+QPushButton:checked{
+	background-color: rgb(116, 128, 139);
+}</string>
      </property>
      <property name="text">
       <string>Top3</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
