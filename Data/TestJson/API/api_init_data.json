@@ -1,0 +1,13 @@
+{
+	"data" : {
+	"api_key" : "fbTETbo0ur2sQe5bBTpin47qzJYQzk6M4R2jzWV4",
+	"base_url" : "https://open-api.bser.io/"
+},
+	"URL" :{
+	"GetUserNumber" : "v1/user/nickname?query={nickname}",
+	"TopRankers" : "v1/rank/top/{seasonId}/{matchingTeamMode}",
+	"GetUserStats" : "v1/user/stats/{userNum}/{seasonId}",
+	"GetUserGames" : "v1/user/games/{userNum}",
+	"GetData" : "v1/data/{metaType}"
+}
+}
