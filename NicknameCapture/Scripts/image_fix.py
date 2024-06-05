@@ -8,6 +8,8 @@ def bgrExtraction(image, bgrLower, bgrUpper):
     return result    
     
 def masking_image(image, font_color, tolerance = 200):
+    #PIL.IMAGE to cv2 image
+    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2RBGR)
     #이미지 2배화
     image_resized = cv2.resize(image, (0, 0), fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
     # BGR로 색추출
