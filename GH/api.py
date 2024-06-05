@@ -86,7 +86,7 @@ class APIFactory:
         if s == None: #request url error
             print("[get_user_data()] : Wrong Request URL")
         
-        response=self._get_api_data(s, headers=headers).json()
+        response=self._get_api_data(s, headers=headers)
 
         if response:
             return response
@@ -106,6 +106,7 @@ class APIFactory:
             user_num=response['user']['userNum']
         else: #api 호출 과정에서 에러가 발생한 경우
             print("[get_user_data()] : No Response")
+            return None
 
         s=self._get_request_url("GetUserGames", { 'userNum' : user_num})
         if s == None: #request url error
@@ -118,7 +119,19 @@ class APIFactory:
             print("[get_user_data()] : No Response")
             return None
 
+    #현재 시즌 번호 받아오기
+    def get_current_seasonId(self):
+        s=self._get_request_url("GetData", {'metaType': 'Season'})
+        if s == None: #request url error
+            print("[get_user_data()] : Wrong Request URL")
 
+        headers = { "accept" : "application/json", "x-api-key" : self.__api_key }
+        response=self._get_api_data(s, headers=headers)
+        if response:
+            for seasons in response['data']:
+                if seasons['isCurrent'] == 1:
+                    return seasons['seasonID']
+        else: #api 호출 과정에서 에러가 발생한 경우
+            print("[get_user_data()] : No Response")
+            return None
 
-a=APIFactory()
-print(a.get_user_data("한동그라미", "14"))
