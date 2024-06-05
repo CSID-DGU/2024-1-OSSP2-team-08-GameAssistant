@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap, QCursor
+from API.api import APIFactory
 
 RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
 MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
@@ -43,8 +44,11 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.MatchesLayout.addItem(self.spacer)
 
         self.NameSearch.clicked.connect(self.UpdateData)
+        self.NameInput.returnPressed.connect(self.UpdateData)
         self.NameSearch.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.PlayerInfoFrame.hide()
+
+        self.apiFact = APIFactory("Data/API/api_init_data.json") #fix Here
 
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
@@ -68,23 +72,25 @@ class RecordFrameUI(QWidget, RecordWindowSource):
 
     def UpdateData(self):
             usernameSrc = self.NameInput.text()
+            playerData = self.apiFact.get_user_data(usernameSrc, 25)#SeasonId For tmp
+            if playerData == None:
+                #404
+                return
+
             #for Debug
             self.PlayerInfoFrame.show()
             self.Nickname.setText(usernameSrc)
-            self.PlayerMMR.setText("")
-            self.WinLose.setText("")
-            self.Winlate.setText("")
+            self.PlayerMMR.setText("MMR: " + str(playerData["mmr"]))
+            self.WinLose.setText("플레이 게임: "+str(playerData["totalGames"]))
+            self.Winlate.setText("승률: {:.2f}%".format(float(playerData["totalWins"]) / playerData["totalGames"] * 100))
 
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",2))
-            self.AddMatchFrame(API_GetPlayerMatchInfo("abc",1))
+            matchData = self.apiFact.get_match_data(usernameSrc)
+            if playerData == None:
+                #404
+                return
+
+            for i in range(20):
+                self.AddMatchFrame(playerData[i])
 
 class MatchUI(QWidget, MatchScoreSource):
     def __init__(self):
