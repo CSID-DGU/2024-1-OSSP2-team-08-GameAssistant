@@ -7,8 +7,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 
-RecordWindowSource = uic.loadUiType("../Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("../Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("/Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("/Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -26,6 +26,9 @@ class MatchJsonInfo():
     playerMMRAfter = "mmrAfter" #이후 MMR
     playerCharCode = "characterNum"
 
+    default = {result : 0, matchTime : 0, playerKill : 0, playerDeath : -1, playerAssistant : 0,\
+               playerDMG : 0, playerMMRBefore : 0, playerMMRAfter : 0, playerCharCode : 0}
+
 class PlayerJsonInfo():
     playerCharCode = "characterCode"
     playerName = "nickname"
@@ -33,6 +36,9 @@ class PlayerJsonInfo():
     playerWin = "totalWins"
     playerLose = "playerLose"
     playerGames = "totalGames"
+
+    default = {playerCharCode : 0, playerName : "", playerMMR : 0, \
+               playerWin : 0, playerLose : 0, playerGames : -1}
 
 class RecordFrameUI(QWidget, RecordWindowSource):
     def __init__(self):
@@ -67,13 +73,13 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
 
     def UpdateData(self):
-        """
-            self.SetPlayerInfo(API_GetPlayerInfo("한동그라미"))
+        
+        self.SetPlayerInfo(API_GetPlayerInfo("한동그라미"))
 
-            match_data=API_GetPlayerMatchInfo("한동그라미")
-            for i in range(1, 20 if len(match_data) > 20 else len(match_data)):
-                self.AddMatchFrame(match_data[i])
-        """
+        match_data=API_GetPlayerMatchInfo("한동그라미")
+        for i in range(1, 20 if len(match_data) > 20 else len(match_data)):
+            self.AddMatchFrame(match_data[i])
+        
         return
 
 
@@ -97,6 +103,7 @@ class MatchUI(QWidget, MatchScoreSource):
         self.KDA.setFont(font)
 
     def SetInfo(self, jsonObj):
+        print(jsonObj)
         playerRank = jsonObj[MatchJsonInfo.result]
         matchTime = jsonObj[MatchJsonInfo.matchTime]
         playerKill = jsonObj[MatchJsonInfo.playerKill]
@@ -144,20 +151,50 @@ class MatchUI(QWidget, MatchScoreSource):
 #region function
 def API_GetPlayerInfo(playerID):
     factory = api.APIFactory()
-    playerJsonObj=factory.get_user_data(nickname=playerID, seasonId='17')
+    seasonId = factory.get_current_seasonId()
+    if seasonId == None:
+        return PlayerJsonInfo.default
+        
+    data=factory.get_user_data(nickname=playerID, seasonId=seasonId)
+    if data == None:
+        return PlayerJsonInfo.default
+    else:
+        data = data['userStats'][0] #matchingTeamMode에 따라 갈림
+        
+        playerJsonObj = {PlayerJsonInfo.playerCharCode : data['characterStats'][0]['characterCode'], \
+                         PlayerJsonInfo.playerName : data['nickname'], \
+                         PlayerJsonInfo.playerMMR : data['mmr'], \
+                         PlayerJsonInfo.playerWin : data['totalWins'], \
+                         PlayerJsonInfo.playerLose : data['totalGames'] - data['totalWins'], \
+                         PlayerJsonInfo.playerGames : data['totalGames']}
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID):
     factory=api.APIFactory()
-    matchJsonObj = factory.get_match_data(playerID)
-    return matchJsonObj
+    data = factory.get_match_data(playerID)
+    match_info_list = []
+    if data == None:
+        return MatchJsonInfo.default
+    else:
+        for match in data['userGames']:
+            if match['matchingMode'] == 3: #랭크 게임만
+                matchJsonObj = {MatchJsonInfo.result : match['gameRank'],\
+                                MatchJsonInfo.matchTime : match['playTime'],\
+                                MatchJsonInfo.playerKill : match['playerKill'],\
+                                MatchJsonInfo.playerDeath : match['playerDeaths'],\
+                                MatchJsonInfo.playerAssistant : match['playerAssistant'],\
+                                MatchJsonInfo.playerDMG : match['damageToPlayer'],\
+                                MatchJsonInfo.playerMMRBefore : match['mmrBefore'],\
+                                MatchJsonInfo.playerMMRAfter : match['mmrAfter'],\
+                                MatchJsonInfo.playerCharCode : match['characterNum']}
+                match_info_list.append(matchJsonObj)
+    return match_info_list
 
 #region function end
-
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
     
     recordFrameObj = RecordFrameUI()
     recordFrameObj.show()
-
+    
     app.exec_()
