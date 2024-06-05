@@ -231,6 +231,8 @@ QPushButton:checked{
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../UIResource/champIcons.qrc"/>
+ </resources>
  <connections/>
 </ui>

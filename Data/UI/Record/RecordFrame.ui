@@ -319,7 +319,7 @@ background-color: rgb(116, 128, 139);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>783</width>
+         <width>788</width>
          <height>650</height>
         </rect>
        </property>
@@ -329,6 +329,8 @@ background-color: rgb(116, 128, 139);
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../UIResource/champIcons.qrc"/>
+ </resources>
  <connections/>
 </ui>

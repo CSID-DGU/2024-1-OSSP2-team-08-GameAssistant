@@ -181,6 +181,8 @@ background-color: rgb(90, 99, 108);</string>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../UIResource/champIcons.qrc"/>
+ </resources>
  <connections/>
 </ui>
