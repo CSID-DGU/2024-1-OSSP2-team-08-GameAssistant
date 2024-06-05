@@ -3,7 +3,7 @@ import requests
 from urllib import parse
 import time
 
-init_data_path='../Data/TestJson/API/api_init_data.json'
+init_data_path='/Data/TestJson/API/api_init_data.json'
 
 class APIFactory:
     def __init__(self):

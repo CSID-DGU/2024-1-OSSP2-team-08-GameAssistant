@@ -7,8 +7,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 
-RecordWindowSource = uic.loadUiType("../Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("../Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("/Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("/Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
