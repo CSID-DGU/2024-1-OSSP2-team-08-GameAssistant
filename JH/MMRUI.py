@@ -7,19 +7,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 from mmrUItest import mmrUI
 
-current_dir = os.path.dirname(__file__)
-ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'MMRUI', 'MMRUI3P.ui')
-ui_file_path1 = os.path.abspath(ui_file_path1)
+MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
 
-json_file_path = os.path.join(current_dir, '..', 'Data', 'TestJson', 'playersMMR', 'Player')
-json_file_path = os.path.abspath(json_file_path)
-
-MMRUIWindowSource = uic.loadUiType(ui_file_path1)[0]
-MMRJsonPath = json_file_path
-'''
-MMRUIWindowSource = uic.loadUiType("Data/UI/MMRUI/MMRUI3P.ui")[0]
-MMRJsonPath = "Data/TestJson/playersMMR/Player"
-'''
 class MMRWindowUI(QMainWindow, MMRUIWindowSource):
     def __init__(self):
         super().__init__()

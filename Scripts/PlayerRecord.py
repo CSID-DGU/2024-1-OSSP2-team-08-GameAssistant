@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap, QCursor
 
 
-RecordWindowSource = uic.loadUiType("/Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("/Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -78,20 +78,20 @@ class RecordFrameUI(QWidget, RecordWindowSource):
 
     def UpdateData(self):
             usernameSrc = self.NameInput.text()
-            playerData = self.API_GetPlayerInfo(usernameSrc)
+            playerData = API_GetPlayerInfo(usernameSrc)
             if playerData == None:
                 #404
                 return
 
             #for Debug
-            #self.PlayerInfoFrame.show()
-            #self.Nickname.setText(usernameSrc)
-            #self.PlayerMMR.setText("MMR: " + str(playerData["mmr"]))
-            #self.WinLose.setText("플레이 게임: "+str(playerData["totalGames"]))
-            #self.Winlate.setText("승률: {:.2f}%".format(float(playerData["totalWins"]) / playerData["totalGames"] * 100))
-            self.SetPlayerInfo(playerData)
+            self.PlayerInfoFrame.show()
+            self.Nickname.setText(usernameSrc)
+            self.PlayerMMR.setText("MMR: " + str(playerData["mmr"]))
+            self.WinLose.setText("플레이 게임: "+str(playerData["totalGames"]))
+            self.Winlate.setText("승률: {:.2f}%".format(float(playerData["totalWins"]) / playerData["totalGames"] * 100))
+            #self.SetPlayerInfo(playerData)
 
-            match_data=API_GetPlayerMatchInfo(usernameSrc)
+            match_data = API_GetPlayerMatchInfo(usernameSrc)
             if match_data == None:
                 #404
                 return

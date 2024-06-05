@@ -11,10 +11,7 @@ from UITest import ImgSelectUI
 import Resources_rc
 import champIcons_rc
 
-current_dir = os.path.dirname(__file__)
-ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'MainUI', 'main.ui')
-ui_file_path1 = os.path.abspath(ui_file_path1)
-MainUiSource = uic.loadUiType(ui_file_path1)[0]
+MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
 
 class MainUI(QWidget, MainUiSource):
     def __init__(self):

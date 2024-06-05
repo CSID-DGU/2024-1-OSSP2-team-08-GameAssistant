@@ -5,17 +5,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 from PyQt5.QtGui import QCursor
 
-from tier import TierWindowUI
+from TierList import TierWindowUI
 from PlayerRecord import RecordFrameUI
 from MMRUI import MMRWindowUI
 from UITest import ImgSelectUI
 import Resources_rc
 import champIcons_rc
 
-current_dir = os.path.dirname(__file__)
-ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'MainUI', 'main.ui')
-ui_file_path1 = os.path.abspath(ui_file_path1)
-MainUiSource = uic.loadUiType(ui_file_path1)[0]
+MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
 
 class MainUI(QWidget, MainUiSource):
     def __init__(self):
@@ -26,7 +23,7 @@ class MainUI(QWidget, MainUiSource):
         self.isDragbarClicked = False
 
         self.ui1 = TierWindowUI()
-        self.ui1.initialize()
+        #self.ui1.initialize()
 
         self.ui2 = RecordFrameUI()
 
