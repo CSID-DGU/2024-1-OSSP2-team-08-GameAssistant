@@ -1,0 +1,18 @@
+{
+  "userStats": {
+      "characterStats": {
+          "characterCode": 1,
+          "usages": 502,
+          "top3": 123,
+          "averageRank": 5.2
+      },
+      "nickname": "박준환",
+      "mmr": 123.0,
+      "rank": 2.3,
+      "totalGames": 123.0,
+      "totalWins": 123.0,
+      "averageRank": 1.2,
+      "averageKills": 23.2,
+      "averageAssistants": 14.5
+  }
+}

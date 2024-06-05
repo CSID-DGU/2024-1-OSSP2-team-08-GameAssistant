@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 
 from tier import TierWindowUI
 from PlayerRecord import RecordFrameUI
-from MMRUI import MMRWindowUI
+from MMRUI2 import MMRWindowUI
 from UITest import ImgSelectUI
 import Resources_rc
 import champIcons_rc
@@ -15,6 +15,8 @@ current_dir = os.path.dirname(__file__)
 ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'MainUI', 'main.ui')
 ui_file_path1 = os.path.abspath(ui_file_path1)
 MainUiSource = uic.loadUiType(ui_file_path1)[0]
+
+Nicknames = ["닉네임1", "닉네임2", "닉네임3"]
 
 class MainUI(QWidget, MainUiSource):
     def __init__(self):
@@ -30,7 +32,7 @@ class MainUI(QWidget, MainUiSource):
         self.ui2 = RecordFrameUI()
 
         self.ui3 = MMRWindowUI()
-        self.ui3.initialize()
+        self.ui3.initialize(Nicknames)
 
         self.ui4 = ImgSelectUI()
 
@@ -44,6 +46,7 @@ class MainUI(QWidget, MainUiSource):
         self.TierListButton.clicked.connect(lambda: self.display(1))
         self.MatchRecordButton.clicked.connect(lambda: self.display(2))
         self.InGameMMRButton.clicked.connect(lambda: self.display(3))
+        #self.단축키.clicked.connect(self.mmrEvent)
 
         self.TierListButton.setChecked(True)
         self.display(1)
@@ -83,7 +86,8 @@ class MainUI(QWidget, MainUiSource):
             event.accept()
 
     def mmrEvent(self):
-        self.ui3.initialize()
+        self.ui3.initialize(Nicknames)
+        self.MainWindow.setCurrentIndex(3)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

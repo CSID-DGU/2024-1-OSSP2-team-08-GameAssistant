@@ -151,7 +151,7 @@ background-color: rgb(90, 99, 108);
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1220</width>
+      <width>1191</width>
       <height>30</height>
      </rect>
     </property>
@@ -182,6 +182,44 @@ color: rgb(255, 255, 255);</string>
       <string>ER.GG</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="CaptureButton">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>0</y>
+      <width>30</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>30</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+background-color: rgb(42, 46, 52);
+border: 5px solid transparent;
+border-image: url(:/Icon/Img/Icon_Gray/settings.svg)stretch stretch;
+}
+QPushButton:hover{
+background-color: rgb(62, 68, 77);
+}
+QPushButton:pressed{
+background-color: rgb(90, 99, 108);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
   </widget>
   <widget class="QFrame" name="SideBar">
@@ -378,6 +416,7 @@ background-color: rgb(61, 67, 76);
  </widget>
  <resources>
   <include location="../UIResource/Resources.qrc"/>
+  <include location="../UIResource/champIcons.qrc"/>
  </resources>
  <connections/>
 </ui>
