@@ -4,15 +4,17 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 
-from TierList import TierWindowUI
+from tier import TierWindowUI
 from PlayerRecord import RecordFrameUI
-from ingameinfo import Ui_MainWindow as InGameInfoUI
+from MMRUI import MMRWindowUI
+from UITest import ImgSelectUI
 import Resources_rc
+import champIcons_rc
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'Scripts'))
-#from UITest import ImgSelectUI
-
-MainUiSource = uic.loadUiType("Data/UI/MainUI/main.ui")[0]
+current_dir = os.path.dirname(__file__)
+ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'MainUI', 'main.ui')
+ui_file_path1 = os.path.abspath(ui_file_path1)
+MainUiSource = uic.loadUiType(ui_file_path1)[0]
 
 class MainUI(QWidget, MainUiSource):
     def __init__(self):
@@ -23,9 +25,14 @@ class MainUI(QWidget, MainUiSource):
         self.isDragbarClicked = False
 
         self.ui1 = TierWindowUI()
+        self.ui1.initialize()
 
         self.ui2 = RecordFrameUI()
-        self.ui3= QMainWindow()
+
+        self.ui3 = MMRWindowUI()
+        self.ui3.initialize()
+
+        self.ui4 = ImgSelectUI()
 
         self.MainWindow.addWidget(self.ui1)
         self.MainWindow.addWidget(self.ui2)
@@ -33,6 +40,7 @@ class MainUI(QWidget, MainUiSource):
 
         self.MinimizeButton.clicked.connect(self.Minimize_Window)
         self.ExitButton.clicked.connect(self.Quit_Window)
+        self.CaptureButton.clicked.connect(self.Capture_Window)
         self.TierListButton.clicked.connect(lambda: self.display(1))
         self.MatchRecordButton.clicked.connect(lambda: self.display(2))
         self.InGameMMRButton.clicked.connect(lambda: self.display(3))
@@ -55,6 +63,9 @@ class MainUI(QWidget, MainUiSource):
     def Quit_Window(self):
         self.close()
 
+    def Capture_Window(self):
+        self.ui4.show()
+
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton and event.pos().y() <= self.DragBar.height():
             self.isDragbarClicked = True
@@ -70,6 +81,9 @@ class MainUI(QWidget, MainUiSource):
         if event.buttons() == QtCore.Qt.LeftButton and event.pos().y() <= self.DragBar.height() and self.isDragbarClicked:  
             self.move(event.globalPos() - self.oldPos)
             event.accept()
+
+    def mmrEvent(self):
+        self.ui3.initialize()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

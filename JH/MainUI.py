@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 
 from tier import TierWindowUI
 from PlayerRecord import RecordFrameUI
-from ingameinfo import Ui_MainWindow as InGameInfoUI
+from MMRUI import MMRWindowUI
 from UITest import ImgSelectUI
 import Resources_rc
 import champIcons_rc
@@ -29,7 +29,8 @@ class MainUI(QWidget, MainUiSource):
 
         self.ui2 = RecordFrameUI()
 
-        self.ui3 = QMainWindow()
+        self.ui3 = MMRWindowUI()
+        self.ui3.initialize()
 
         self.ui4 = ImgSelectUI()
 
@@ -80,6 +81,9 @@ class MainUI(QWidget, MainUiSource):
         if event.buttons() == QtCore.Qt.LeftButton and event.pos().y() <= self.DragBar.height() and self.isDragbarClicked:  
             self.move(event.globalPos() - self.oldPos)
             event.accept()
+
+    def mmrEvent(self):
+        self.ui3.initialize()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
