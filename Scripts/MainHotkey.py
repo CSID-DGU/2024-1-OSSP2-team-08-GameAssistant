@@ -5,7 +5,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication
 from pynput.keyboard import Listener, Key, KeyCode
 from UITest import CaptureHelperUI
-
+from mouse_test import NicknameCapture
 
 class HotkeyListener(QtCore.QThread):
     hotkey_pressed = QtCore.pyqtSignal()
@@ -14,6 +14,7 @@ class HotkeyListener(QtCore.QThread):
         super().__init__()
         self.store = set()
         self.hot_key = set([Key.alt_l, KeyCode(char='d')])
+        self.json_data = []
         self.capture_helper_ui = None
 
     def handleKeyPress(self, key):
@@ -44,4 +45,11 @@ class HotkeyListener(QtCore.QThread):
             screenshot_path = "NicknameCapture/Scripts/capture_image/screenshot.png"
             screenshot.save(screenshot_path, "png")
             self.capture_helper_ui = CaptureHelperUI(screenshot_path)
+            contract = NicknameCapture("Data/captureJson/Regions.json", "NicknameCapture/Scripts/capture_image", r"C:\Program Files\Tesseract-OCR\tesseract.exe")
             self.capture_helper_ui.show()
+            if self.capture_helper_ui.state == 4:
+                contract.capture_images()
+                self.json_data = contract.get_text_from_image()
+            
+    def getjson(self):
+        return self.json_data
