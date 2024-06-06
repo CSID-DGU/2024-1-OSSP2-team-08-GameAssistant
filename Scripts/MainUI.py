@@ -5,45 +5,18 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 from PyQt5.QtGui import QCursor
 #add library
-from pynput.keyboard import Listener, Key, KeyCode
-from NicknameCapture.Scripts.mouse_test import NicknameCapture
+from MainHotkey import HotkeyListener
 #
 from TierList import TierWindowUI
 from PlayerRecord import RecordFrameUI
 from MMRUI import MMRWindowUI
-from UITest import ImgSelectUI
+from UITest import ImgSelectUI, CaptureHelperUI
 import Resources_rc
 import champIcons_rc
 
 MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
 
 class MainUI(QWidget, MainUiSource):
-    store = set()
-    hot_key = set([Key.alt_l, KeyCode(char='d')])
-    json_data = []
-    
-    def handleKeyPress( key ):
-        MainUI.store.add( key )
-        
-    def handleKeyRelease( key ):
-        check = all([True if k in MainUI.store else False for k in MainUI.hot_key ])
-        if check:
-            capture=NicknameCapture('./SaveDate.json', r'C:\Program Files\Tesseract-OCR\tesseract.exe')
-            json_data = get_text_from_image()
-        
-        if key in MainUI.store:
-            MainUI.store.remove( key )
-
-    # 종료
-        if key == Key.esc:
-            return False
-        
-    def getNicknameData():
-        return MainUI.json_data
-    
-    def Init_Capture():
-        with Listener(on_press=mainUI.handleKeyPress, on_release=MainUI.handleKeyRelease) as listener:
-            listener.join()
     
     def __init__(self):
         super().__init__()
@@ -81,6 +54,12 @@ class MainUI(QWidget, MainUiSource):
         
         self.TierListButton.setChecked(True)
         self.display(1)
+        
+    #############################
+        self.hotkey_listener = HotkeyListener()
+        self.hotkey_listener.hotkey_pressed.connect(self.hotkey_listener.onHotkeyPressed)
+        self.hotkey_listener.start()
+    #############################    
 
     def display(self, index):
         self.MainWindow.setCurrentIndex(index)
