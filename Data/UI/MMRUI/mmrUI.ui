@@ -386,6 +386,7 @@ border: 0px</string>
  </widget>
  <resources>
   <include location="../UIResource/champIcons.qrc"/>
+  <include location="../UIResource/charIcons.qrc"/>
  </resources>
  <connections/>
 </ui>

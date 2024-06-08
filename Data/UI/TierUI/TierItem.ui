@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1071</width>
-    <height>228</height>
+    <height>215</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,9 @@ background-color: rgb(90, 99, 108);
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid rgb(116, 128, 139);</string>
+    </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -89,7 +92,7 @@ background-color: rgb(90, 99, 108);</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;CharName123&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Attribute01">
+   <widget class="QLabel" name="Attribute03">
     <property name="geometry">
      <rect>
       <x>900</x>
@@ -122,6 +125,9 @@ background-color: rgb(90, 99, 108);</string>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid rgb(116, 128, 139);</string>
+    </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
@@ -147,7 +153,7 @@ background-color: rgb(90, 99, 108);</string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;99.99%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="Attribute03">
+   <widget class="QLabel" name="Attribute01">
     <property name="geometry">
      <rect>
       <x>620</x>

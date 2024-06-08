@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1073</width>
-    <height>976</height>
+    <height>770</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -337,11 +337,147 @@ background-color: rgb(116, 128, 139);
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>788</width>
+         <width>783</width>
          <height>650</height>
         </rect>
        </property>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="SearchIngFrame">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>35</y>
+       <width>600</width>
+       <height>600</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="SearchImg">
+      <property name="geometry">
+       <rect>
+        <x>225</x>
+        <y>40</y>
+        <width>150</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgba(200, 200, 200, 0);;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/char/CharIcon/256.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="SearchText">
+      <property name="geometry">
+       <rect>
+        <x>125</x>
+        <y>190</y>
+        <width>350</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 15pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:0px;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;전적을 불러오는 중입니다...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="SearchName">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>270</y>
+        <width>350</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 15pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:0px;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;한동그라미&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="ErrorFrame">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>35</y>
+       <width>600</width>
+       <height>600</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="ErrorImg">
+      <property name="geometry">
+       <rect>
+        <x>225</x>
+        <y>40</y>
+        <width>150</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgba(200, 200, 200, 0);;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/char/CharIcon/193.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="ErrorText">
+      <property name="geometry">
+       <rect>
+        <x>125</x>
+        <y>190</y>
+        <width>350</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 15pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+border:0px;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;알 수 없는 에러가 발생했습니다&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;다시 시도하거나, 닉네임을 확인해주세요&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -349,6 +485,7 @@ background-color: rgb(116, 128, 139);
  </widget>
  <resources>
   <include location="../UIResource/champIcons.qrc"/>
+  <include location="../UIResource/charIcons.qrc"/>
  </resources>
  <connections/>
 </ui>

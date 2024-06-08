@@ -53,7 +53,7 @@ background-color: rgb(90, 99, 108);
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>10</y>
+      <y>15</y>
       <width>120</width>
       <height>120</height>
      </rect>
@@ -64,8 +64,12 @@ background-color: rgb(90, 99, 108);
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border: 3px solid rgb(116, 128, 139);
+border-radius: 5px;</string>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/Champ/Yuumi.webp&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/champions/Champions/Mini/4.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -74,9 +78,9 @@ background-color: rgb(90, 99, 108);
    <widget class="QLabel" name="Result">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>3</x>
       <y>60</y>
-      <width>61</width>
+      <width>107</width>
       <height>30</height>
      </rect>
     </property>
@@ -86,7 +90,7 @@ color: rgb(255, 255, 255);
 background-color: rgb(90, 99, 108);</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;1위&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;1위&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="MatchTime">

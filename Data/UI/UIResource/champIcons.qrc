@@ -76,6 +76,15 @@
     <file>Champions/Mini/74.png</file>
   </qresource>
   <qresource prefix="tiers">
+    <file>Tier/Bronze_Mini.png</file>
+    <file>Tier/Demigod_Mini.png</file>
+    <file>Tier/Diamond_Mini.png</file>
+    <file>Tier/Eternity_Mini.png</file>
+    <file>Tier/Gold_Mini.png</file>
+    <file>Tier/Iron_Mini.png</file>
+    <file>Tier/Mithril_Mini.png</file>
+    <file>Tier/Platinum_Mini.png</file>
+    <file>Tier/Silver_Mini.png</file>
     <file>Tier/Bronze.png</file>
     <file>Tier/0.png</file>
     <file>Tier/1.png</file>

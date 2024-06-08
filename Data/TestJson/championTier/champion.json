@@ -3,30 +3,107 @@
       "1": {
         "code":  1,
         "name": "재키",
-        "Winrate": 11.63,
-        "Pickrate": 4.02,
-        "Top3": 37.81
+        "Winrate": 15.83,
+        "Pickrate": 1.93,
+        "Top3": 46.07
       },
       "2": {
         "code": 2,
         "name": "아야",
-        "Winrate": 12.11,
-        "Pickrate": 3.25,
-        "Top3": 36.66
+        "Winrate": 17.59,
+        "Pickrate": 1.85,
+        "Top3": 39.25
       },
       "3": {
         "code": 3,
-        "name": "피오라",
-        "Winrate": 11.59,
-        "Pickrate": 2.70,
-        "Top3": 38.60
+        "name": "현우",
+        "Winrate": 16.67,
+        "Pickrate": 2.09,
+        "Top3": 43.05
       },
       "4": {
         "code": 4,
         "name": "매그너스",
-        "Winrate": 14.86,
-        "Pickrate": 2.54,
-        "Top3": 39.93
+        "Winrate": 20.04,
+        "Pickrate": 1.81,
+        "Top3": 44.20
+      },
+      "5": {
+        "code": 5,
+        "name": "피오라",
+        "Winrate": 15.55,
+        "Pickrate": 2.17,
+        "Top3": 43.11
+      },
+      "6": {
+        "code": 6,
+        "name": "나딘",
+        "Winrate": 15.16,
+        "Pickrate": 1.79,
+        "Top3": 39.23
+      },
+      "7": {
+        "code": 7,
+        "name": "자히르",
+        "Winrate": 14.96,
+        "Pickrate": 2.23,
+        "Top3": 40.05
+      },
+      "8": {
+        "code": 8,
+        "name": "하트",
+        "Winrate": 14.81,
+        "Pickrate": 1.72,
+        "Top3": 43.22
+      },
+      "9": {
+        "code": 9,
+        "name": "아이솔",
+        "Winrate": 14.38,
+        "Pickrate": 2.33,
+        "Top3": 39.62
+      },
+      "10": {
+        "code": 10,
+        "name": "리 다이린",
+        "Winrate": 14.13,
+        "Pickrate": 1.71,
+        "Top3": 40.76
+      },
+      "11": {
+        "code": 11,
+        "name": "유키",
+        "Winrate": 13.98,
+        "Pickrate": 2.57,
+        "Top3": 41.36
+      },
+      "12": {
+        "code": 12,
+        "name": "혜진",
+        "Winrate": 13.90,
+        "Pickrate": 1.68,
+        "Top3": 42.52
+      },
+      "13": {
+        "code": 13,
+        "name": "쇼우",
+        "Winrate": 13.77,
+        "Pickrate": 3.26,
+        "Top3": 52.86
+      },
+      "14": {
+        "code": 14,
+        "name": "시셀라",
+        "Winrate": 13.64,
+        "Pickrate": 1.67,
+        "Top3": 41.62
+      },
+      "15": {
+        "code": 15,
+        "name": "키아라",
+        "Winrate": 13.60,
+        "Pickrate": 4.33,
+        "Top3": 42.26
       }
     }
 }

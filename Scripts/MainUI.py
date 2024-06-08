@@ -131,10 +131,11 @@ class MainUI(QWidget, MainUiSource):
                 self.Show_Window()
 
     def HotKeyEvent(self): 
-        self.Show_Window()
-        self.display(3)
-        nameList = self.ocr.OCR_Nickname()
-        self.ui3.UpdateData(nameList)
+        if self.ui3.playerIdx == 0:
+            self.Show_Window()
+            self.display(3)
+            nameList = self.ocr.OCR_Nickname()
+            self.ui3.UpdateData(nameList)
         
 
 if __name__ == '__main__':

@@ -166,7 +166,7 @@ QPushButton:checked{
 }</string>
      </property>
      <property name="text">
-      <string>PickLate</string>
+      <string>WinLate</string>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -194,7 +194,7 @@ QPushButton:checked{
 }</string>
      </property>
      <property name="text">
-      <string>WinLate</string>
+      <string>PickLate</string>
      </property>
      <property name="checkable">
       <bool>true</bool>

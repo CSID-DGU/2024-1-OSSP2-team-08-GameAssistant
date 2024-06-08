@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="char">
+    <file>CharIcon/193.png</file>
+    <file>CharIcon/196.png</file>
+    <file>CharIcon/238.png</file>
+    <file>CharIcon/256.png</file>
+  </qresource>
+</RCC>

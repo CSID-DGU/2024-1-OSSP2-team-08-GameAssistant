@@ -1,7 +1,7 @@
 import sys, os
 import json
-from API import api
-from PyQt5.QtCore import Qt
+from API.api import APIFactory, APICallRunnable, WorkerSignals
+from PyQt5.QtCore import Qt, QThreadPool
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget
@@ -50,13 +50,16 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.MatchesLayout = QVBoxLayout(self.scrollAreaWidgetContents_2)
         self.scrollAreaWidgetContents_2.setLayout(self.MatchesLayout)
 
-        self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.MatchesLayout.addItem(self.spacer)
-
         self.NameSearch.clicked.connect(self.UpdateData)
         self.NameInput.returnPressed.connect(self.UpdateData)
         self.NameSearch.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.PlayerInfoFrame.hide()
+        self.SearchIngFrame.hide()
+        self.ErrorFrame.hide()
+
+        self.thread_pool = QThreadPool()
+
+        self.IsThreadRunning = False
 
     def SetPlayerInfo(self, jsonObj):
         playerCharCode = jsonObj[PlayerJsonInfo.playerCharCode]
@@ -82,20 +85,103 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         self.MatchesLayout.insertWidget(-1, matchObj.MatchFrame)
 
     def UpdateData(self):
-            usernameSrc = self.NameInput.text()
-            playerData = API_GetPlayerInfo(usernameSrc)
-            if playerData == None:
-                #404
+            if self.IsThreadRunning:
                 return
-            #for Debug
-            self.SetPlayerInfo(playerData)
+            else:
+                self.IsThreadRunning = True
+                self.SearchIngFrame.show()
+                self.PlayerInfoFrame.hide()
+                self.ErrorFrame.hide()
+                usernameSrc = self.NameInput.text()
+                self.get_player_data(usernameSrc)
+                self.get_match_data(usernameSrc)
+                self.SearchName.setText(usernameSrc)
+                self.SearchName.setAlignment(Qt.AlignCenter)
+            
 
-            match_data = API_GetPlayerMatchInfo(usernameSrc)
-            if match_data == None:
-                #404
-                return
-            for i in range(1, 20 if len(match_data) > 20 else len(match_data)):
-                self.AddMatchFrame(match_data[i])
+    def run_thread(self, api_factory, method, callback, *args):
+        runnable = APICallRunnable(api_factory, method, *args)
+        runnable.signals.result.connect(callback)
+        runnable.signals.error.connect(self.on_error_occurred)
+        self.thread_pool.start(runnable)
+
+    def on_player_data_received(self, data):
+        if data == None:
+            return None
+        else:
+            stats = [stats for stats in data['userStats'] if stats['matchingMode'] == 3]
+            mmr=[]
+            win=[]
+            lose=[]
+            games=[]
+            avgRank=[]
+            for stat in stats:
+                mmr.append(stat['mmr'])
+                win.append(stat['totalWins'])
+                lose.append(stat['totalGames'] - stat['totalWins'])
+                games.append(stat['totalGames'])
+                avgRank.append(stat['averageRank'])
+
+            #평균 계산
+            mmr = round(sum(mmr)/len(mmr))
+            win = sum(win)
+            lose = sum(lose)
+            games = sum(games)
+            avgRank = sum(avgRank)
+                            #솔로에서 가장 많이 쓴 캐릭터
+            playerJsonObj = {PlayerJsonInfo.playerCharCode : data['userStats'][0]['characterStats'][0]['characterCode'], \
+                            PlayerJsonInfo.playerName : data['userStats'][0]['nickname'], \
+                            PlayerJsonInfo.playerMMR : mmr, \
+                            PlayerJsonInfo.playerWin : win, \
+                            PlayerJsonInfo.playerLose : lose, \
+                            PlayerJsonInfo.playerGames : games, \
+                            PlayerJsonInfo.playerAvgRank: avgRank}
+        self.SetPlayerInfo(playerJsonObj)
+
+    def on_match_data_received(self, data):
+        match_info_list = []
+        if data == None:
+            return MatchJsonInfo.default
+        else:
+            for match in data['userGames']:
+                if match['matchingMode'] == 3: #랭크 게임만
+                    matchJsonObj = {MatchJsonInfo.result : match['gameRank'],\
+                                    MatchJsonInfo.matchTime : match['playTime'],\
+                                    MatchJsonInfo.playerKill : match['playerKill'],\
+                                    MatchJsonInfo.playerDeath : match['playerDeaths'],\
+                                    MatchJsonInfo.playerAssistant : match['playerAssistant'],\
+                                    MatchJsonInfo.playerDMG : match['damageToPlayer'],\
+                                    MatchJsonInfo.playerMMRBefore : match['mmrBefore'],\
+                                    MatchJsonInfo.playerMMRAfter : match['mmrAfter'],\
+                                    MatchJsonInfo.playerCharCode : match['characterNum'], \
+                                    MatchJsonInfo.playerTK: match['teamKill']    }
+                    match_info_list.append(matchJsonObj)
+        for i in range(1, 20 if len(match_info_list) > 20 else len(match_info_list)):
+            self.AddMatchFrame(match_info_list[i])
+        self.IsThreadRunning = False
+        self.SearchIngFrame.hide()
+        self.ErrorFrame.hide()
+
+    def on_error_occurred(self, error):
+        print(f"Error: {error}")
+        self.ErrorFrame.show()
+        self.SearchIngFrame.hide()
+        self.IsThreadRunning = False
+
+    def get_player_data(self, usernameSrc):
+        self.factory = APIFactory()
+        self.run_thread(self.factory, "get_user_data", self.on_player_data_received, usernameSrc, self.factory.get_current_seasonId())
+
+    def get_match_data(self, usernameSrc):
+        while self.MatchesLayout.count() > 0:  # Keep the spacer
+            item = self.MatchesLayout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+        self.spacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.MatchesLayout.addItem(self.spacer)
+        self.factory = APIFactory()
+        self.run_thread(self.factory, "get_match_data", self.on_match_data_received, usernameSrc)
 
 class MatchUI(QWidget, MatchScoreSource):
     def __init__(self):
@@ -135,6 +221,7 @@ class MatchUI(QWidget, MatchScoreSource):
         else:
             tmpColor = "rgb(153,153,153)"
         self.Result.setText("<span style='color: white; font-size:18px;'>"+str(playerRank) + "위")   
+        self.Result.setAlignment(Qt.AlignCenter)
         
         
         self.MatchTime.setText(str(matchTime//60)+"분 "+str(matchTime%60)+"초")
@@ -150,71 +237,8 @@ class MatchUI(QWidget, MatchScoreSource):
         
         
         self.CharIMG.setPixmap(QPixmap((":/champions/Champions/Mini/"+str(playerCharCode)+".png")))
-#region Class End
 
-#region function
-def API_GetPlayerInfo(playerID):
-    factory = api.APIFactory()
-    seasonId = factory.get_current_seasonId()
-    if seasonId == None:
-        return PlayerJsonInfo.default
-        
-    data=factory.get_user_data(nickname=playerID, seasonId=seasonId)
-    if data == None:
-        return None
-    else:
-        stats = [stats for stats in data['userStats'] if stats['matchingMode'] == 3]
-        mmr=[]
-        win=[]
-        lose=[]
-        games=[]
-        avgRank=[]
-        for stat in stats:
-            mmr.append(stat['mmr'])
-            win.append(stat['totalWins'])
-            lose.append(stat['totalGames'] - stat['totalWins'])
-            games.append(stat['totalGames'])
-            avgRank.append(stat['averageRank'])
 
-        #평균 계산
-        mmr = round(sum(mmr)/len(mmr))
-        win = sum(win)
-        lose = sum(lose)
-        games = sum(games)
-        avgRank = sum(avgRank)
-                          #솔로에서 가장 많이 쓴 캐릭터
-        playerJsonObj = {PlayerJsonInfo.playerCharCode : data['userStats'][0]['characterStats'][0]['characterCode'], \
-                         PlayerJsonInfo.playerName : data['userStats'][0]['nickname'], \
-                         PlayerJsonInfo.playerMMR : mmr, \
-                         PlayerJsonInfo.playerWin : win, \
-                         PlayerJsonInfo.playerLose : lose, \
-                         PlayerJsonInfo.playerGames : games, \
-                         PlayerJsonInfo.playerAvgRank: avgRank}
-    return playerJsonObj
-
-def API_GetPlayerMatchInfo(playerID):
-    factory=api.APIFactory()
-    data = factory.get_match_data(playerID)
-    match_info_list = []
-    if data == None:
-        return MatchJsonInfo.default
-    else:
-        for match in data['userGames']:
-            if match['matchingMode'] == 3: #랭크 게임만
-                matchJsonObj = {MatchJsonInfo.result : match['gameRank'],\
-                                MatchJsonInfo.matchTime : match['playTime'],\
-                                MatchJsonInfo.playerKill : match['playerKill'],\
-                                MatchJsonInfo.playerDeath : match['playerDeaths'],\
-                                MatchJsonInfo.playerAssistant : match['playerAssistant'],\
-                                MatchJsonInfo.playerDMG : match['damageToPlayer'],\
-                                MatchJsonInfo.playerMMRBefore : match['mmrBefore'],\
-                                MatchJsonInfo.playerMMRAfter : match['mmrAfter'],\
-                                MatchJsonInfo.playerCharCode : match['characterNum'], \
-                                MatchJsonInfo.playerTK: match['teamKill']    }
-                match_info_list.append(matchJsonObj)
-    return match_info_list
-
-#region function end
 if __name__ == "__main__" :
     app = QApplication(sys.argv) 
     
