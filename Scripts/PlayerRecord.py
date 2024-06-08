@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap, QCursor
 
 
-RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("/Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("/Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -82,7 +82,6 @@ class RecordFrameUI(QWidget, RecordWindowSource):
             if playerData == None:
                 #404
                 return
-
             #for Debug
             self.PlayerInfoFrame.show()
             self.Nickname.setText(usernameSrc)
@@ -172,14 +171,29 @@ def API_GetPlayerInfo(playerID):
     if data == None:
         return None
     else:
-        data = data['userStats'][0] #matchingTeamMode에 따라 갈림
-        
-        playerJsonObj = {PlayerJsonInfo.playerCharCode : data['characterStats'][0]['characterCode'], \
-                         PlayerJsonInfo.playerName : data['nickname'], \
-                         PlayerJsonInfo.playerMMR : data['mmr'], \
-                         PlayerJsonInfo.playerWin : data['totalWins'], \
-                         PlayerJsonInfo.playerLose : data['totalGames'] - data['totalWins'], \
-                         PlayerJsonInfo.playerGames : data['totalGames']}
+        stats = [stats for stats in data['userStats'] if stats['matchingMode'] == 3]
+        mmr=[]
+        win=[]
+        lose=[]
+        games=[]
+        for stat in stats:
+            mmr.append(stat['mmr'])
+            win.append(stat['totalWins'])
+            lose.append(stat['totalGames'] - stat['totalWins'])
+            games.append(stat['totalGames'])
+
+        #평균 계산
+        mmr = round(sum(mmr)/len(mmr))
+        win = sum(win)
+        lose = sum(lose)
+        games = sum(games)
+                          #솔로에서 가장 많이 쓴 캐릭터
+        playerJsonObj = {PlayerJsonInfo.playerCharCode : data['userStats'][0]['characterStats'][0]['characterCode'], \
+                         PlayerJsonInfo.playerName : data['userStats'][0]['nickname'], \
+                         PlayerJsonInfo.playerMMR : mmr, \
+                         PlayerJsonInfo.playerWin : win, \
+                         PlayerJsonInfo.playerLose : lose, \
+                         PlayerJsonInfo.playerGames : games}
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID):
