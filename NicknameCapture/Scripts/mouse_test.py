@@ -1,7 +1,7 @@
 from pynput.mouse import Listener
 from pynput.keyboard import GlobalHotKeys as HotKeys
 from pynput.keyboard import Controller
-from image_fix import masking_image
+#from image_fix import masking_image
 import pyautogui as pygui
 import json
 
@@ -44,7 +44,7 @@ class NicknameCapture:
         pytesseract.pytesseract.tesseract_cmd = tesseract_file_path #tesseract .exe path
         self.__image_list = []
         self.__region_list= []
-        self.__load_json()
+        #self.__load_json()
 
         
     def __load_json(self): #load json data from file at init
@@ -66,10 +66,10 @@ class NicknameCapture:
             for region in self.__region_list:
                 print(region.get_name(), region.get_region()) #test, delete after
 
-    def start_hotkey(self):
-        with HotKeys({
-        '<shift>+s': self.on_capture_image_button}) as h:
-            h.join()
+    # def start_hotkey(self):
+    #     with HotKeys({
+    #     '<shift>+s': self.on_capture_image_button}) as h:
+    #         h.join()
 
     def on_click(self, x, y, button, pressed): #get region and add in __region_list
         if pressed:
@@ -124,7 +124,7 @@ class NicknameCapture:
             img = pygui.screenshot(region=(rect[0] if rect[0]<rect[2] else rect[2],\
                                      rect[1] if rect[1]<rect[3] else rect[3],
                                      width, height))
-            masking_image(img, [172,178, 165])
+            #masking_image(img, [172,178, 165])
             image_list.append(img)
 
         self.__image_list = image_list
@@ -137,9 +137,10 @@ class NicknameCapture:
             dic=dict(name = region.get_name(), nickname=str(text))
             nickname_list.append(dic)
         print(nickname_list) #for test
+        return nickname_list
 
-#testcode
-capture=NicknameCapture("NicknameCapture/JSON/SaveDate.json", './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+#testcodeS
+# capture=NicknameCapture("NicknameCapture/JSON/SaveDate.json", './capture_image/', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
 
 #capture when hotkey pressed
-capture.start_hotkey()
+# capture.start_hotkey()
