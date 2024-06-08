@@ -3,13 +3,13 @@ import os
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
+from PyQt5.QtGui import QCursor
 
-from tier import TierWindowUI
+from TierList import TierWindowUI
 from PlayerRecord import RecordFrameUI
 from MMRUI import MMRWindowUI
 from UITest import ImgSelectUI
 import Resources_rc
-import champIcons_rc
 
 MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
 
@@ -22,7 +22,7 @@ class MainUI(QWidget, MainUiSource):
         self.isDragbarClicked = False
 
         self.ui1 = TierWindowUI()
-        self.ui1.initialize()
+        #self.ui1.initialize()
 
         self.ui2 = RecordFrameUI()
 
@@ -35,13 +35,19 @@ class MainUI(QWidget, MainUiSource):
         self.MainWindow.addWidget(self.ui2)
         self.MainWindow.addWidget(self.ui3)
 
+        self.MinimizeButton.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.ExitButton.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.TierListButton.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.MatchRecordButton.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.InGameMMRButton.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+
         self.MinimizeButton.clicked.connect(self.Minimize_Window)
         self.ExitButton.clicked.connect(self.Quit_Window)
         self.CaptureButton.clicked.connect(self.Capture_Window)
         self.TierListButton.clicked.connect(lambda: self.display(1))
         self.MatchRecordButton.clicked.connect(lambda: self.display(2))
         self.InGameMMRButton.clicked.connect(lambda: self.display(3))
-
+        
         self.TierListButton.setChecked(True)
         self.display(1)
 

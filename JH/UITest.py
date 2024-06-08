@@ -6,18 +6,8 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap, QPainter, QColor
 
-current_dir = os.path.dirname(__file__)
-ui_file_path1 = os.path.join(current_dir, '..', 'Data', 'UI', 'NickNameCapture', 'SelectImg.ui')
-ui_file_path1 = os.path.abspath(ui_file_path1)
-ui_file_path2 = os.path.join(current_dir, '..', 'Data', 'UI', 'NickNameCapture', 'CaptureHelper.ui')
-ui_file_path2 = os.path.abspath(ui_file_path2)
-json_file_path1 = os.path.join(current_dir, '..', 'Data', 'Json', 'captureJson', 'SaveDate.json')
-json_file_path1 = os.path.abspath(json_file_path1)
-json_file_path2 = os.path.join(current_dir, '..', 'Data', 'Json', 'captureJson', 'Regions.json')
-json_file_path2 = os.path.abspath(json_file_path2)
-
-ImgSelectWindowSource = uic.loadUiType(ui_file_path1)[0]
-CaptureHelperSource = uic.loadUiType(ui_file_path2)[0]
+ImgSelectWindowSource = uic.loadUiType("Data/UI/NickNameCapture/SelectImg.ui")[0]
+CaptureHelperSource = uic.loadUiType("Data/UI/NickNameCapture/CaptureHelper.ui")[0]
 
 
 class ImgSelectUI(QWidget, ImgSelectWindowSource):
@@ -63,8 +53,8 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
         self.end_point = None
         self.selected_region = None
 
-        self.__file_path = json_file_path2  # Correct file path for regions
-        self.__json_file_path = json_file_path1
+        self.__file_path = "Data/Json/captureJson/Regions.json" # Correct file path for regions
+        self.__json_file_path = "Data/Json/captureJson/SaveDate.json"
         self.__region_list = []
         self.__load_json()
 
