@@ -5,6 +5,8 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore
+from UIResources import Resources_rc
+from UIResources import champIcons_rc
 
 TierWindowSource = uic.loadUiType("Data/UI/TierUI/TierWindow.ui")[0]
 TierItemSource = uic.loadUiType("Data/UI/TierUI/TierItem.ui")[0]
@@ -31,37 +33,38 @@ class TierWindowUI(QWidget, TierWindowSource):
         i = 0
         tier = 0
         for data in c_file["data"]:
+            self.c_lists[i].append(c_file["data"][data]["code"])
             self.c_lists[i].append(c_file["data"][data]["name"])
             self.c_lists[i].append(c_file["data"][data]["Winrate"])
             self.c_lists[i].append(c_file["data"][data]["Pickrate"])
             self.c_lists[i].append(c_file["data"][data]["Top3"])
-            if self.c_lists[i][1] >= 55.0:
+            if self.c_lists[i][4] >= 39.0:
                 tier = 0
-            elif 55.0 > self.c_lists[i][1] >= 52.0:
+            elif 55.0 > self.c_lists[i][4] >= 37.0:
                 tier = 1
-            elif 52.0 > self.c_lists[i][1] >= 50.0:
+            elif 52.0 > self.c_lists[i][4] >= 35.0:
                 tier = 2
-            elif 50.0 > self.c_lists[i][1] >= 48.0:
+            elif 50.0 > self.c_lists[i][4] >= 33.0:
                 tier = 3
-            elif 48.0 > self.c_lists[i][1] >= 45.0:
+            elif 48.0 > self.c_lists[i][4] >= 31.0:
                 tier = 4
-            elif 45.0 > self.c_lists[i][1]:
+            elif 45.0 > self.c_lists[i][4]:
                 tier = 5
             self.c_lists[i].append(tier)
             self.c_lists[i].append(TierItemUI(self.c_lists[i]))
             print(self.c_lists)
             i += 1
 
-        self.Attribute01btn.clicked.connect(lambda:self.sortTiers(1))
-        self.Attribute02btn.clicked.connect(lambda:self.sortTiers(2))
-        self.Attribute03btn.clicked.connect(lambda:self.sortTiers(3))
+        self.Attribute01btn.clicked.connect(lambda:self.sortTiers(4))
+        self.Attribute02btn.clicked.connect(lambda:self.sortTiers(3))
+        self.Attribute03btn.clicked.connect(lambda:self.sortTiers(2))
         self.Attribute01btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.Attribute02btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.Attribute03btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         
 
         self.TierLayout.addItem(self.spacer)
-        self.sortTiers(1)
+        self.sortTiers(4)
 
     def sortTiers(self, num):
         self.c_lists.sort(key = lambda x: x[num])
@@ -76,15 +79,15 @@ class TierWindowUI(QWidget, TierWindowSource):
                 self.sortIsReverse = True
                 self.c_lists.reverse()
         
-        if self.sortIndex == 1:
+        if self.sortIndex == 4:
             self.Attribute01btn.setChecked(True)
             self.Attribute02btn.setChecked(False)
             self.Attribute03btn.setChecked(False)
-        elif self.sortIndex == 2:
+        elif self.sortIndex == 3:
             self.Attribute01btn.setChecked(False)
             self.Attribute02btn.setChecked(True)
             self.Attribute03btn.setChecked(False)
-        elif self.sortIndex == 3:
+        elif self.sortIndex == 2:
             self.Attribute01btn.setChecked(False)
             self.Attribute02btn.setChecked(False)
             self.Attribute03btn.setChecked(True)
@@ -114,10 +117,14 @@ class TierItemUI(QWidget, TierItemSource):
     def SetInfo(self, c_list):
         #Add Img Change Here
 
-        self.CharName.setText("<span style = 'font-size:12px; text-align: center;'>" + c_list[0] + "</span>")
-        self.Attribute01.setText("<span style = 'font-size:12px; text-align: right;'>" + str(c_list[1]) + "</span>")
-        self.Attribute02.setText("<span style = 'font-size:12px; text-align: center;'>" + str(c_list[2]) + "</span>")  
-        self.Attribute03.setText("<span style = 'font-size:12px; text-align: center;'>" + str(c_list[3]) + "</span>")  
+        self.CharIMG.setPixmap(QPixmap((":/champions/Champions/Mini/"+str(c_list[0])+".png")))
+        self.CharName.setText("<span style = 'font-size:12px; text-align: center;'>" + c_list[1] + "</span>")
+        self.Attribute01.setText("<span style = 'font-size:12px; text-align: right;'>" + str(c_list[2]) + "</span>")
+        self.Attribute02.setText("<span style = 'font-size:12px; text-align: center;'>" + str(c_list[3]) + "</span>")  
+        self.Attribute03.setText("<span style = 'font-size:12px; text-align: center;'>" + str(c_list[4]) + "</span>")  
+        self.TierIMG.setPixmap(QPixmap((":/tiers/Tier/"+str(c_list[5])+".png")))
+
+        
 
 
 if __name__ == "__main__":

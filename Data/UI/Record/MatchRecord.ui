@@ -74,10 +74,10 @@ background-color: rgb(90, 99, 108);
    <widget class="QLabel" name="Result">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>90</y>
+      <x>30</x>
+      <y>60</y>
       <width>61</width>
-      <height>21</height>
+      <height>30</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -86,14 +86,14 @@ color: rgb(255, 255, 255);
 background-color: rgb(90, 99, 108);</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;승리&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;1위&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="MatchTime">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>120</y>
+      <x>680</x>
+      <y>116</y>
       <width>56</width>
       <height>12</height>
      </rect>
@@ -122,7 +122,7 @@ color: rgb(255, 255, 255);
 background-color: rgb(90, 99, 108);</string>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;99 / &lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#ff0000;&quot;&gt;99&lt;/span&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt; / 99&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;99 / &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;99&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; / 99&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="KDALate">
@@ -177,6 +177,42 @@ background-color: rgb(90, 99, 108);</string>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;MMR: 9999 &lt;/span&gt;&lt;span style=&quot; font-size:12pt; color:#ff0000;&quot;&gt;▲999&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TK">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>90</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 9pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(90, 99, 108);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;TK: 99&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="KDAShow">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>20</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 9pt &quot;KoPub돋움체 Bold&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(90, 99, 108);</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; color:#c3c3c3;&quot;&gt;K / D / A&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>

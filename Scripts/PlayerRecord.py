@@ -1,6 +1,6 @@
 import sys, os
 import json
-import api
+from API import api
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PyQt5 import uic, QtCore
@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap, QCursor
 
 
-RecordWindowSource = uic.loadUiType("/Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("/Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
@@ -26,9 +26,10 @@ class MatchJsonInfo():
     playerMMRBefore = "mmrBefore" #이전 MMR
     playerMMRAfter = "mmrAfter" #이후 MMR
     playerCharCode = "characterNum"
+    playerTK = "teamKill"
 
     default = {result : 0, matchTime : 0, playerKill : 0, playerDeath : -1, playerAssistant : 0,\
-               playerDMG : 0, playerMMRBefore : 0, playerMMRAfter : 0, playerCharCode : 0}
+               playerDMG : 0, playerMMRBefore : 0, playerMMRAfter : 0, playerCharCode : 0, playerTK: 0}
 
 class PlayerJsonInfo():
     playerCharCode = "characterCode"
@@ -37,9 +38,10 @@ class PlayerJsonInfo():
     playerWin = "totalWins"
     playerLose = "playerLose"
     playerGames = "totalGames"
+    playerAvgRank = "averageRank"
 
     default = {playerCharCode : 0, playerName : "", playerMMR : 0, \
-               playerWin : 0, playerLose : 0, playerGames : -1}
+               playerWin : 0, playerLose : 0, playerGames : -1, playerAvgRank: 1.0}
 
 class RecordFrameUI(QWidget, RecordWindowSource):
     def __init__(self):
@@ -62,19 +64,22 @@ class RecordFrameUI(QWidget, RecordWindowSource):
         playerMMR = jsonObj[PlayerJsonInfo.playerMMR]
         playerWin = jsonObj[PlayerJsonInfo.playerWin]
         playerGames = jsonObj[PlayerJsonInfo.playerGames]
+        playerAvgRank = jsonObj[PlayerJsonInfo.playerAvgRank]
 
         self.Nickname.setText(playerName)
         self.PlayerMMR.setText("MMR: "+str(playerMMR))
         self.Winlate.setText(str(round(playerWin/(playerGames)*100,1))+"%")
-        self.WinLose.setText(str(playerWin)+"승 "+str(playerGames - playerWin)+"패")
+        self.avgRank.setText("평균 순위: "+str(round(playerAvgRank, 1)))
+        self.totalGame.setText("게임 수: "+str(playerGames))
 
-        self.PlayerImg.setPixmap(QPixmap(("PlayerImg/"+str(playerCharCode)+".png")))
+        self.PlayerImg.setPixmap(QPixmap((":/champions/Champions/Mini/"+str(playerCharCode)+".png")))
+        self.PlayerInfoFrame.show()
         return
 
     def AddMatchFrame(self, jsonObj):
         matchObj = MatchUI()
         matchObj.SetInfo(jsonObj)
-        self.MatchesLayout.insertWidget(0, matchObj.MatchFrame)
+        self.MatchesLayout.insertWidget(-1, matchObj.MatchFrame)
 
     def UpdateData(self):
             usernameSrc = self.NameInput.text()
@@ -83,12 +88,7 @@ class RecordFrameUI(QWidget, RecordWindowSource):
                 #404
                 return
             #for Debug
-            self.PlayerInfoFrame.show()
-            self.Nickname.setText(usernameSrc)
-            self.PlayerMMR.setText("MMR: " + str(playerData["mmr"]))
-            self.WinLose.setText("플레이 게임: "+str(playerData["totalGames"]))
-            self.Winlate.setText("승률: {:.2f}%".format(float(playerData["totalWins"]) / playerData["totalGames"] * 100))
-            #self.SetPlayerInfo(playerData)
+            self.SetPlayerInfo(playerData)
 
             match_data = API_GetPlayerMatchInfo(usernameSrc)
             if match_data == None:
@@ -115,7 +115,6 @@ class MatchUI(QWidget, MatchScoreSource):
         self.KDA.setFont(font)
 
     def SetInfo(self, jsonObj):
-        print(jsonObj)
         playerRank = jsonObj[MatchJsonInfo.result]
         matchTime = jsonObj[MatchJsonInfo.matchTime]
         playerKill = jsonObj[MatchJsonInfo.playerKill]
@@ -126,38 +125,31 @@ class MatchUI(QWidget, MatchScoreSource):
         playerMMRAfter = jsonObj[MatchJsonInfo.playerMMRAfter]
         playerMMRGain = playerMMRAfter - playerMMRBefore
         playerCharCode = jsonObj[MatchJsonInfo.playerCharCode]
+        playerTK = jsonObj[MatchJsonInfo.playerTK]
 
-        if not MatchJsonInfo.isWinOrLose:
-            if playerRank == 1:
-                #self.Result.setStyleSheet("color: blue")
-                self.Result.setText("<span style='color: blue; font-size:15px;'>승리")               
-                #self.MatchFrame.setStyleSheet("background-color: rgb(236, 242, 255)")
-            else:
-                #self.Result.setStyleSheet("color: red")
-                self.Result.setText("<span style='color: red; font-size:15px;'>패배")          
-                #self.MatchFrame.setStyleSheet("background-color: rgb(255, 241, 243)")
+        tmpColor = ""
+        if playerRank == 1:
+            tmpColor = "rgb(17,178,136)"
+        elif playerRank == 2 or playerRank == 3:
+            tmpColor = "blue"
         else:
-            self.Result.setText(playerRank,"위")
-            if playerRank == 1:
-                self.Result.setStyleSheet("Color: green")
-            elif playerRank == 2:
-                self.Result.setStyleSheet("Color: blue")
-            else:
-                self.Result.setStyleSheet("Color: gray")
+            tmpColor = "rgb(153,153,153)"
+        self.Result.setText("<span style='color: white; font-size:18px;'>"+str(playerRank) + "위")   
         
         
         self.MatchTime.setText(str(matchTime//60)+"분 "+str(matchTime%60)+"초")
         self.KDA.setText("<span style='font-size:19px;'>"+str(playerKill)+" / "+"<span style='color: red;'>"+str(playerDeath)+"</span>"+" / "+str(playerAssistant)+"</span>")
         self.KDALate.setText("<span style='font-size:15px;'>"+"KDA: "+ ("Perfact" if playerDeath == 0 else str(round((playerKill+playerAssistant)/playerDeath,1)))+"</span>")
         self.DMG.setText("<span style='font-size:15px;'>"+"DMG: "+str(playerDMG)+"</span>")
+        self.TK.setText("<span style='font-size:15px;'>"+"TK: "+str(playerTK)+"</span>")
 
         if playerMMRGain > 0:
-            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: blue;'> ▲"+str(playerMMRGain)+"</span>"+"</span>")
+            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: red;'> ▲"+str(playerMMRGain)+"</span>"+"</span>")
         else:
-            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: red;'> ▼"+str(-playerMMRGain)+"</span>"+"</span>")
+            self.MMR.setText("<span style='font-size:15px;'>"+"MMR: "+str(playerMMRAfter)+"<span style='color: blue;'> ▼"+str(-playerMMRGain)+"</span>"+"</span>")
         
         
-        self.CharIMG.setPixmap(QPixmap(("CharImg/"+str(playerCharCode)+".png")))
+        self.CharIMG.setPixmap(QPixmap((":/champions/Champions/Mini/"+str(playerCharCode)+".png")))
 #region Class End
 
 #region function
@@ -176,24 +168,28 @@ def API_GetPlayerInfo(playerID):
         win=[]
         lose=[]
         games=[]
+        avgRank=[]
         for stat in stats:
             mmr.append(stat['mmr'])
             win.append(stat['totalWins'])
             lose.append(stat['totalGames'] - stat['totalWins'])
             games.append(stat['totalGames'])
+            avgRank.append(stat['averageRank'])
 
         #평균 계산
         mmr = round(sum(mmr)/len(mmr))
         win = sum(win)
         lose = sum(lose)
         games = sum(games)
+        avgRank = sum(avgRank)
                           #솔로에서 가장 많이 쓴 캐릭터
         playerJsonObj = {PlayerJsonInfo.playerCharCode : data['userStats'][0]['characterStats'][0]['characterCode'], \
                          PlayerJsonInfo.playerName : data['userStats'][0]['nickname'], \
                          PlayerJsonInfo.playerMMR : mmr, \
                          PlayerJsonInfo.playerWin : win, \
                          PlayerJsonInfo.playerLose : lose, \
-                         PlayerJsonInfo.playerGames : games}
+                         PlayerJsonInfo.playerGames : games, \
+                         PlayerJsonInfo.playerAvgRank: avgRank}
     return playerJsonObj
 
 def API_GetPlayerMatchInfo(playerID):
@@ -213,7 +209,8 @@ def API_GetPlayerMatchInfo(playerID):
                                 MatchJsonInfo.playerDMG : match['damageToPlayer'],\
                                 MatchJsonInfo.playerMMRBefore : match['mmrBefore'],\
                                 MatchJsonInfo.playerMMRAfter : match['mmrAfter'],\
-                                MatchJsonInfo.playerCharCode : match['characterNum']}
+                                MatchJsonInfo.playerCharCode : match['characterNum'], \
+                                MatchJsonInfo.playerTK: match['teamKill']    }
                 match_info_list.append(matchJsonObj)
     return match_info_list
 

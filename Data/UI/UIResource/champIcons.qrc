@@ -1,82 +1,8 @@
 <RCC>
   <qresource prefix="champions">
-    <file>Champions/Half/1.png</file>
-    <file>Champions/Half/2.png</file>
-    <file>Champions/Half/3.png</file>
-    <file>Champions/Half/4.png</file>
-    <file>Champions/Half/5.png</file>
-    <file>Champions/Half/6.png</file>
-    <file>Champions/Half/7.png</file>
-    <file>Champions/Half/8.png</file>
-    <file>Champions/Half/9.png</file>
-    <file>Champions/Half/10.png</file>
-    <file>Champions/Half/11.png</file>
-    <file>Champions/Half/12.png</file>
-    <file>Champions/Half/13.png</file>
-    <file>Champions/Half/14.png</file>
-    <file>Champions/Half/15.png</file>
-    <file>Champions/Half/16.png</file>
-    <file>Champions/Half/17.png</file>
-    <file>Champions/Half/18.png</file>
-    <file>Champions/Half/19.png</file>
-    <file>Champions/Half/20.png</file>
-    <file>Champions/Half/21.png</file>
-    <file>Champions/Half/22.png</file>
-    <file>Champions/Half/23.png</file>
-    <file>Champions/Half/24.png</file>
-    <file>Champions/Half/25.png</file>
-    <file>Champions/Half/26.png</file>
-    <file>Champions/Half/27.png</file>
-    <file>Champions/Half/28.png</file>
-    <file>Champions/Half/29.png</file>
-    <file>Champions/Half/30.png</file>
-    <file>Champions/Half/31.png</file>
-    <file>Champions/Half/32.png</file>
-    <file>Champions/Half/33.png</file>
-    <file>Champions/Half/34.png</file>
-    <file>Champions/Half/35.png</file>
-    <file>Champions/Half/36.png</file>
-    <file>Champions/Half/37.png</file>
-    <file>Champions/Half/38.png</file>
-    <file>Champions/Half/39.png</file>
-    <file>Champions/Half/40.png</file>
-    <file>Champions/Half/41.png</file>
-    <file>Champions/Half/42.png</file>
-    <file>Champions/Half/43.png</file>
-    <file>Champions/Half/44.png</file>
-    <file>Champions/Half/45.png</file>
-    <file>Champions/Half/46.png</file>
-    <file>Champions/Half/47.png</file>
-    <file>Champions/Half/48.png</file>
-    <file>Champions/Half/49.png</file>
-    <file>Champions/Half/50.png</file>
-    <file>Champions/Half/51.png</file>
-    <file>Champions/Half/52.png</file>
-    <file>Champions/Half/53.png</file>
-    <file>Champions/Half/54.png</file>
-    <file>Champions/Half/55.png</file>
-    <file>Champions/Half/56.png</file>
-    <file>Champions/Half/57.png</file>
-    <file>Champions/Half/58.png</file>
-    <file>Champions/Half/59.png</file>
-    <file>Champions/Half/60.png</file>
-    <file>Champions/Half/61.png</file>
-    <file>Champions/Half/62.png</file>
-    <file>Champions/Half/63.png</file>
-    <file>Champions/Half/64.png</file>
-    <file>Champions/Half/65.png</file>
-    <file>Champions/Half/66.png</file>
-    <file>Champions/Half/67.png</file>
-    <file>Champions/Half/68.png</file>
-    <file>Champions/Half/69.png</file>
-    <file>Champions/Half/70.png</file>
-    <file>Champions/Half/71.png</file>
-    <file>Champions/Half/72.png</file>
-    <file>Champions/Half/73.png</file>
-    <file>Champions/Half/74.png</file>
-    <file>Champions/Mini/3.png</file>
     <file>Champions/Mini/1.png</file>
     <file>Champions/Mini/2.png</file>
+    <file>Champions/Mini/3.png</file>
     <file>Champions/Mini/4.png</file>
     <file>Champions/Mini/5.png</file>
     <file>Champions/Mini/6.png</file>
@@ -138,6 +64,16 @@
     <file>Champions/Mini/62.png</file>
     <file>Champions/Mini/63.png</file>
     <file>Champions/Mini/64.png</file>
+    <file>Champions/Mini/65.png</file>
+    <file>Champions/Mini/66.png</file>
+    <file>Champions/Mini/67.png</file>
+    <file>Champions/Mini/68.png</file>
+    <file>Champions/Mini/69.png</file>
+    <file>Champions/Mini/70.png</file>
+    <file>Champions/Mini/71.png</file>
+    <file>Champions/Mini/72.png</file>
+    <file>Champions/Mini/73.png</file>
+    <file>Champions/Mini/74.png</file>
   </qresource>
   <qresource prefix="tiers">
     <file>Tier/Bronze.png</file>

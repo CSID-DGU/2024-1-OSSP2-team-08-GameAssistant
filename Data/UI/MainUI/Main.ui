@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Frame</class>
- <widget class="QFrame" name="Frame">
+ <class>MainFrame</class>
+ <widget class="QFrame" name="MainFrame">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -207,8 +207,8 @@ color: rgb(255, 255, 255);</string>
     <property name="styleSheet">
      <string notr="true">QPushButton{
 background-color: rgb(42, 46, 52);
-border: 5px solid transparent;
-border-image: url(:/Icon/Img/Icon_Gray/settings.svg)stretch stretch;
+border: 5px solid  rgb(42, 46, 52);
+border-image: url(:/Icon/Img/Icon_Gray/settings.svg);
 }
 QPushButton:hover{
 background-color: rgb(62, 68, 77);
