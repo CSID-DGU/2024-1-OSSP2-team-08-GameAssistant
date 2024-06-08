@@ -93,6 +93,7 @@ class CaptureHelperUI(QWidget, CaptureHelperSource):
         return
 
     def Btn_Exit(self):
+        self.state = 4
         self.close()
 
     def __load_json(self):

@@ -4,11 +4,13 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
 from PyQt5 import QtCore
 from PyQt5.QtGui import QCursor
-
+#add library
+from MainHotkey import HotkeyListener
+#
 from TierList import TierWindowUI
 from PlayerRecord import RecordFrameUI
 from MMRUI import MMRWindowUI
-from UITest import ImgSelectUI
+from UITest import ImgSelectUI, CaptureHelperUI
 import Resources_rc
 import champIcons_rc
 
@@ -51,6 +53,11 @@ class MainUI(QWidget, MainUiSource):
         
         self.TierListButton.setChecked(True)
         self.display(1)
+    #############################
+        self.hotkey_listener = HotkeyListener()
+        self.hotkey_listener.hotkey_pressed.connect(self.hotkey_listener.onHotkeyPressed)
+        self.hotkey_listener.start()
+    #############################    
 
     def display(self, index):
         self.MainWindow.setCurrentIndex(index)
