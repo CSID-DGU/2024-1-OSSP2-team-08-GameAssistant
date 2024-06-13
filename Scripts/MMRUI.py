@@ -2,16 +2,22 @@ import sys, os
 import json
 from API.api import APIFactory, APICallRunnable
 import pyautogui
-from PyQt5.QtCore import Qt,QThreadPool
+from PyQt5.QtCore import Qt,QThreadPool, QDir
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap
 #from mmrUItest import mmrUI
 
-mmrUisrc = uic.loadUiType("Data/UI/MMRUI/mmrUI.ui")[0]
-MMRUIWindowSource = uic.loadUiType("Data/UI/MMRUI/MMRWindow.ui")[0]
-MMRJsonPath = "Data/TestJson/playersMMR/Player"
+if getattr(sys, 'frozen', False):
+    Data_path = QDir.currentPath() + '/Data'
+else:
+    Data_path = 'Data'
+
+
+mmrUisrc = uic.loadUiType(Data_path+"/UI/MMRUI/mmrUI.ui")[0]
+MMRUIWindowSource = uic.loadUiType(Data_path+"/UI/MMRUI/MMRWindow.ui")[0]
+MMRJsonPath = Data_path+"/TestJson/playersMMR/Player"
 
 class PlayerMMRInfo():
     playerCharCode = "characterCode"

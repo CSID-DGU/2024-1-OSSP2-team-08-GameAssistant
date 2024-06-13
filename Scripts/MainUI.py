@@ -16,8 +16,12 @@ import champIcons_rc
 #
 from OCR.Scripts.NicknameOCR import NicknameCapture
 
+if getattr(sys, 'frozen', False):
+    Data_path = QtCore.QDir.currentPath() + '/Data'
+else:
+    Data_path = 'Data'
 
-MainUiSource = uic.loadUiType("Data/UI/MainUI/Main.ui")[0]
+MainUiSource = uic.loadUiType(Data_path+"/UI/MainUI/Main.ui")[0]
 
 class MainUI(QWidget, MainUiSource):
     def __init__(self):

@@ -5,12 +5,18 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QDir
 from UIResources import Resources_rc
 from UIResources import champIcons_rc
 
-TierWindowSource = uic.loadUiType("Data/UI/TierUI/TierWindow.ui")[0]
-TierItemSource = uic.loadUiType("Data/UI/TierUI/TierItem.ui")[0]
+if getattr(sys, 'frozen', False):
+    Data_path = QDir.currentPath() + '/Data'
+else:
+    Data_path = 'Data'
+
+
+TierWindowSource = uic.loadUiType(Data_path+"/UI/TierUI/TierWindow.ui")[0]
+TierItemSource = uic.loadUiType(Data_path+"/UI/TierUI/TierItem.ui")[0]
 
 class TierWindowUI(QWidget, TierWindowSource):
     def __init__(self):

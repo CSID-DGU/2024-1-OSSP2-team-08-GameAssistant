@@ -7,9 +7,13 @@ from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QPixmap, QCursor
 
+if getattr(sys, 'frozen', False):
+    Data_path = QtCore.QDir.currentPath() + '/Data'
+else:
+    Data_path = 'Data'
 
-RecordWindowSource = uic.loadUiType("Data/UI/Record/RecordFrame.ui")[0]
-MatchScoreSource = uic.loadUiType("Data/UI/Record/MatchRecord.ui")[0]
+RecordWindowSource = uic.loadUiType(Data_path+"/UI/Record/RecordFrame.ui")[0]
+MatchScoreSource = uic.loadUiType(Data_path+"/UI/Record/MatchRecord.ui")[0]
 
 #region Class
 class MatchJsonInfo():
